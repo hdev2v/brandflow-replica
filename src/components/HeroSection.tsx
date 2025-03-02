@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import Button from './Button';
 
@@ -66,33 +67,40 @@ const HeroSection = () => {
           </div>
           
           <div className="order-1 lg:order-2 relative mb-8 lg:mb-0">
-            {/* Main profile image with rounded corners */}
-            <div className="relative rounded-[2.5rem] overflow-hidden">
-              <img 
-                src="/lovable-uploads/27bac0b0-9f6d-4194-8e1b-57dd4880699c.png"
-                alt="Nadia - Social Media Expert" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            
-            {/* Top floating element - collage of images */}
-            <div className="absolute -top-4 right-0 lg:top-5 lg:right-0 z-10 w-1/2 lg:w-2/3 origin-top-right">
-              <div className="rounded-xl overflow-hidden shadow-lg">
-                <img 
-                  src="/lovable-uploads/fd2432ff-85d3-4bbe-9360-481a252360fa.png" 
-                  alt="Social Media Gallery" 
-                  className="w-full h-auto" 
-                />
+            {/* Image container with all images */}
+            <div className="relative h-[500px] w-full">
+              {/* Main profile image positioned to the left and behind */}
+              <div className="absolute left-0 bottom-0 w-3/5 z-0">
+                <div className="rounded-2xl overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/27bac0b0-9f6d-4194-8e1b-57dd4880699c.png"
+                    alt="Nadia - Social Media Expert" 
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
               </div>
-            </div>
-            
-            {/* Bottom floating element - Instagram stats */}
-            <div className="absolute -bottom-4 right-0 lg:-bottom-10 lg:-right-5 z-10 w-3/5 lg:w-2/3 origin-bottom-right">
-              <img 
-                src="/lovable-uploads/ffad4bf2-ff2e-4fd9-bda9-f567e36c7250.png" 
-                alt="Instagram Stats" 
-                className="w-full h-auto rounded-xl shadow-lg"
-              />
+              
+              {/* Social Media Gallery - positioned to overlap but not fully cover */}
+              <div className="absolute top-0 right-0 w-3/5 z-10">
+                <div className="rounded-xl overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/fd2432ff-85d3-4bbe-9360-481a252360fa.png" 
+                    alt="Social Media Gallery" 
+                    className="w-full h-auto" 
+                  />
+                </div>
+              </div>
+              
+              {/* Instagram Stats - positioned to be visible but overlap with gallery */}
+              <div className="absolute right-0 bottom-8 w-3/5 z-20">
+                <div className="rounded-xl overflow-hidden">
+                  <img 
+                    src="/lovable-uploads/ffad4bf2-ff2e-4fd9-bda9-f567e36c7250.png" 
+                    alt="Instagram Stats" 
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
