@@ -77,17 +77,8 @@ const FeaturesSection = () => {
         </div>
         
         <div className="grid grid-cols-1 gap-8 items-center">
-          {/* Social Media Image in Center */}
-          <div className="mx-auto scale-in-element transform transition-all duration-1000 opacity-0 translate-y-0">
-            <img 
-              src="/lovable-uploads/9221e27b-dba9-4577-83fe-76fafe0a012a.png" 
-              alt="Social Media Icons" 
-              className="w-full max-w-sm mx-auto rounded-lg animate-float shadow-xl" 
-            />
-          </div>
-          
           {/* Feature Cards in Ring Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {features.map((feature, index) => (
               <FeatureCard 
                 key={index} 
@@ -96,6 +87,15 @@ const FeaturesSection = () => {
                 icon={feature.icon} 
               />
             ))}
+          </div>
+          
+          {/* Social Media Image Below */}
+          <div className="mx-auto mt-16 scale-in-element transform transition-all duration-1000 opacity-0 translate-y-0">
+            <img 
+              src="/lovable-uploads/9221e27b-dba9-4577-83fe-76fafe0a012a.png" 
+              alt="Social Media Icons" 
+              className="w-full max-w-sm mx-auto rounded-lg animate-float" 
+            />
           </div>
         </div>
       </div>
