@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import p5 from 'p5';
 
 interface SocialIcon {
@@ -16,6 +16,7 @@ interface SocialIcon {
 const P5SocialIcons: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const sketchRef = useRef<p5 | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -25,6 +26,7 @@ const P5SocialIcons: React.FC = () => {
       const icons: SocialIcon[] = [];
       const numIcons = 20;
       const logoImages: Record<string, p5.Image> = {};
+      const loadedImages: Record<string, boolean> = {};
       
       // Social media platforms with their brand colors and logo paths
       const socialPlatforms = [
@@ -40,10 +42,35 @@ const P5SocialIcons: React.FC = () => {
         { platform: 'gmail', name: 'Gmail', color: '#EA4335' }
       ];
       
-      // Preload images
+      // Preload images with error handling
       p.preload = () => {
         socialPlatforms.forEach(platform => {
-          logoImages[platform.platform] = p.loadImage(`/social-icons/${platform.platform}.png`);
+          try {
+            logoImages[platform.platform] = p.loadImage(
+              `/social-icons/${platform.platform}.png`, 
+              // Success callback
+              () => {
+                loadedImages[platform.platform] = true;
+                console.log(`Loaded ${platform.platform} image`);
+                // Check if all images are loaded
+                if (Object.keys(loadedImages).length === socialPlatforms.length) {
+                  setLoading(false);
+                }
+              },
+              // Error callback
+              () => {
+                console.log(`Failed to load ${platform.platform} image, using fallback`);
+                loadedImages[platform.platform] = false;
+                // Even if image fails, we still want to continue
+                if (Object.keys(loadedImages).length === socialPlatforms.length) {
+                  setLoading(false);
+                }
+              }
+            );
+          } catch (error) {
+            console.error(`Error loading ${platform.platform}:`, error);
+            loadedImages[platform.platform] = false;
+          }
         });
       };
       
@@ -134,8 +161,11 @@ const P5SocialIcons: React.FC = () => {
           p.fill(rgb.r, rgb.g, rgb.b, icon.opacity * 0.2);
           p.ellipse(icon.x, icon.y, glowSize, glowSize);
           
-          // Draw the actual logo image
-          if (logoImages[icon.platform]) {
+          // Check if the image is loaded successfully
+          const imageLoaded = logoImages[icon.platform] && loadedImages[icon.platform];
+          
+          if (imageLoaded) {
+            // Draw the actual logo image
             p.push();
             p.imageMode(p.CENTER);
             p.tint(255, icon.opacity * 2.55); // Convert opacity to 0-255 range
@@ -174,11 +204,18 @@ const P5SocialIcons: React.FC = () => {
   }, []);
 
   return (
-    <div 
-      ref={canvasRef} 
-      className="absolute inset-0 pointer-events-none"
-      aria-hidden="true"
-    />
+    <div className="relative w-full h-full">
+      {loading && (
+        <div className="absolute top-2 left-2 text-sm text-primary-foreground z-10 bg-black/20 px-2 py-1 rounded">
+          Loading icons...
+        </div>
+      )}
+      <div 
+        ref={canvasRef} 
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+      />
+    </div>
   );
 };
 

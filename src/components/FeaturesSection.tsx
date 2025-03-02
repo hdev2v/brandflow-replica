@@ -101,8 +101,10 @@ const FeaturesSection = () => {
         </div>
       </div>
       
-      {/* P5.js Social Icons Animation */}
-      <P5SocialIcons />
+      {/* P5.js Social Icons Animation with better positioning */}
+      <div className="absolute inset-0 w-full h-full">
+        <P5SocialIcons />
+      </div>
       
       {/* Background decoration */}
       <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
