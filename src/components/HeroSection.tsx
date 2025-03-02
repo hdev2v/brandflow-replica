@@ -31,7 +31,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="pt-20 md:pt-32 pb-24 px-4 md:px-6 bg-black text-white overflow-hidden">
+    <section id="home" className="viewport-section pt-20 md:pt-32 pb-24 px-4 md:px-6 bg-black text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="order-2 lg:order-1 z-10">

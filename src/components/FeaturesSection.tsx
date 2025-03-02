@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface FeatureCardProps {
@@ -69,7 +68,7 @@ const FeaturesSection = () => {
     }
   ];
 
-  return <section id="features" className="py-24 px-6 bg-secondary/30">
+  return <section id="features" className="viewport-section py-24 px-6 bg-secondary/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 reveal-right">Our Services</h2>

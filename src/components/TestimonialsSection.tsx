@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 interface TestimonialProps {
@@ -74,7 +73,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section id="testimonials" className="py-24 px-6 bg-secondary/30">
+    <section id="testimonials" className="viewport-section py-24 px-6 bg-secondary/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 fade-in-element">Client Testimonials</h2>

@@ -76,6 +76,10 @@
 }
 
 @layer components {
+  .viewport-section {
+    @apply min-h-screen flex flex-col justify-center;
+  }
+
   .glass-card {
     @apply bg-black/50 backdrop-blur-sm rounded-xl border border-white/10 shadow-lg hover:shadow-xl transition-shadow transform hover:-translate-y-1 duration-300 overflow-hidden;
   }
