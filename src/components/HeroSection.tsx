@@ -67,11 +67,11 @@ const HeroSection = () => {
           </div>
           
           <div className="order-1 lg:order-2 relative mb-8 lg:mb-0">
-            {/* Image container with improved layout */}
-            <div className="relative h-[550px] w-full">
-              {/* Main profile image - centered as the focal point */}
-              <div className="absolute left-0 lg:left-5 bottom-0 w-4/5 md:w-3/4 lg:w-4/5 z-10 transform lg:translate-x-[5%]">
-                <div className="rounded-3xl overflow-hidden bg-gray-100">
+            {/* Refined image container with better composition */}
+            <div className="relative h-[580px] w-full">
+              {/* Main profile image - positioned for better focal prominence */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-[85%] md:w-[80%] lg:w-[90%] z-20 transition-all duration-700 hover:scale-[1.02]">
+                <div className="rounded-3xl overflow-hidden shadow-2xl">
                   <img 
                     src="/lovable-uploads/27bac0b0-9f6d-4194-8e1b-57dd4880699c.png"
                     alt="Nadia - Social Media Expert" 
@@ -80,9 +80,12 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Social Media Gallery - positioned top right with overlap */}
-              <div className="absolute top-6 right-0 w-3/5 md:w-1/2 lg:w-3/5 z-20">
-                <div className="rounded-2xl overflow-hidden">
+              {/* Decorative background gradient for depth */}
+              <div className="absolute left-1/2 bottom-8 transform -translate-x-1/2 w-[95%] h-[75%] rounded-[40px] bg-gradient-to-t from-pink-500/10 to-transparent blur-xl z-10"></div>
+              
+              {/* Social Media Gallery - positioned for better integration */}
+              <div className="absolute top-0 right-0 md:right-4 w-[55%] md:w-[50%] lg:w-[55%] z-30 transition-all duration-500 hover:translate-y-1 hover:rotate-1">
+                <div className="rounded-2xl overflow-hidden shadow-lg">
                   <img 
                     src="/lovable-uploads/fd2432ff-85d3-4bbe-9360-481a252360fa.png" 
                     alt="Social Media Gallery" 
@@ -91,9 +94,9 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Instagram Stats - positioned bottom right with good visibility */}
-              <div className="absolute right-0 bottom-12 lg:bottom-20 w-2/5 md:w-2/5 lg:w-2/5 z-30">
-                <div className="rounded-2xl overflow-hidden">
+              {/* Instagram Stats - repositioned for better balance */}
+              <div className="absolute right-2 bottom-[20%] w-[45%] md:w-[38%] lg:w-[40%] z-40 transition-all duration-500 hover:-translate-y-1 hover:-rotate-1">
+                <div className="rounded-2xl overflow-hidden shadow-lg">
                   <img 
                     src="/lovable-uploads/ffad4bf2-ff2e-4fd9-bda9-f567e36c7250.png" 
                     alt="Instagram Stats" 
