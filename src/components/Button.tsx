@@ -17,10 +17,10 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const variantStyles = {
-    primary: 'bg-primary text-primary-foreground hover:opacity-90',
+    primary: 'bg-white text-black hover:bg-gray-100',
     secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-    outline: 'border border-primary bg-transparent text-primary hover:bg-primary/5',
-    ghost: 'bg-transparent text-primary hover:bg-secondary'
+    outline: 'border border-white bg-transparent text-white hover:bg-white/10',
+    ghost: 'bg-transparent text-white hover:bg-white/10'
   };
   
   const sizeStyles = {
@@ -32,7 +32,7 @@ const Button = ({
   return (
     <button
       className={cn(
-        'relative overflow-hidden rounded-md font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 btn-hover-effect',
+        'relative overflow-hidden rounded-md font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black',
         variantStyles[variant],
         sizeStyles[size],
         className

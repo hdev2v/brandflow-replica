@@ -11,6 +11,13 @@ import { setupAnimations } from '@/lib/animation';
 
 const Index = () => {
   useEffect(() => {
+    // Change page title and meta description to Swedish
+    document.title = "Nadia - Social Media Expert";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Jag hjälper dig växa med sociala medier. Upptäck hur sociala medier kan ge ditt varumärke riktiga resultat.');
+    }
+    
     // Set up scroll animations
     const observer = setupAnimations();
     
@@ -23,7 +30,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-black text-white">
       <Navbar />
       <HeroSection />
       <FeaturesSection />
