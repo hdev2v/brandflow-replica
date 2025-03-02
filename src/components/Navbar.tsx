@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { scrollToSection } from '@/lib/animation';
+import { scrollToSection } from '@/lib/utils';
 import Button from './Button';
 import { cn } from '@/lib/utils';
 
@@ -60,7 +60,10 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center">
-          <a href="#home" className="text-2xl font-display font-bold tracking-tight">
+          <a href="#home" className={cn(
+            "text-2xl font-display font-bold tracking-tight",
+            !isScrolled && "text-white"
+          )}>
             Brand<span className="font-light">Flow</span>
           </a>
         </div>
@@ -77,7 +80,9 @@ const Navbar = () => {
               }}
               className={cn(
                 'nav-item text-sm font-medium transition-colors duration-200',
-                activeSection === item.id ? 'text-primary active' : 'text-muted-foreground hover:text-primary'
+                activeSection === item.id 
+                  ? isScrolled ? 'text-primary active' : 'text-white active' 
+                  : isScrolled ? 'text-muted-foreground hover:text-primary' : 'text-white/80 hover:text-white'
               )}
             >
               {item.name}
@@ -86,14 +91,19 @@ const Navbar = () => {
         </nav>
         
         <div className="hidden md:block">
-          <Button variant="primary" size="md">
+          <Button variant="primary" size="md" className={cn(
+            !isScrolled && "bg-white text-primary hover:bg-white/90"
+          )}>
             Get Started
           </Button>
         </div>
         
         {/* Mobile menu button */}
         <button 
-          className="block md:hidden text-primary p-2"
+          className={cn(
+            "block md:hidden p-2",
+            isScrolled ? "text-primary" : "text-white"
+          )}
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
