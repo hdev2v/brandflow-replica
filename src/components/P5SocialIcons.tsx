@@ -6,12 +6,11 @@ interface SocialIcon {
   x: number;
   y: number;
   size: number;
-  icon: string;
   speedX: number;
   speedY: number;
   opacity: number;
   color: string;
-  logo: string;
+  platform: string;
 }
 
 const P5SocialIcons: React.FC = () => {
@@ -29,21 +28,23 @@ const P5SocialIcons: React.FC = () => {
       
       // Social media platforms with their brand colors and logo paths
       const socialPlatforms = [
-        { icon: 'fb', name: 'Facebook', color: '#1877F2', logo: 'facebook' },
-        { icon: 'ig', name: 'Instagram', color: '#E4405F', logo: 'instagram' },
-        { icon: 'yt', name: 'YouTube', color: '#FF0000', logo: 'youtube' },
-        { icon: 'tt', name: 'TikTok', color: '#000000', logo: 'tiktok' },
-        { icon: 'tw', name: 'Twitter', color: '#1DA1F2', logo: 'twitter' },
-        { icon: 'sc', name: 'Snapchat', color: '#FFFC00', logo: 'snapchat' },
-        { icon: 'li', name: 'LinkedIn', color: '#0A66C2', logo: 'linkedin' },
-        { icon: 'pi', name: 'Pinterest', color: '#E60023', logo: 'pinterest' },
-        { icon: 'wa', name: 'WhatsApp', color: '#25D366', logo: 'whatsapp' },
-        { icon: 'gm', name: 'Gmail', color: '#EA4335', logo: 'gmail' }
+        { platform: 'facebook', name: 'Facebook', color: '#1877F2' },
+        { platform: 'instagram', name: 'Instagram', color: '#E4405F' },
+        { platform: 'youtube', name: 'YouTube', color: '#FF0000' },
+        { platform: 'tiktok', name: 'TikTok', color: '#000000' },
+        { platform: 'twitter', name: 'Twitter', color: '#1DA1F2' },
+        { platform: 'snapchat', name: 'Snapchat', color: '#FFFC00' },
+        { platform: 'linkedin', name: 'LinkedIn', color: '#0A66C2' },
+        { platform: 'pinterest', name: 'Pinterest', color: '#E60023' },
+        { platform: 'whatsapp', name: 'WhatsApp', color: '#25D366' },
+        { platform: 'gmail', name: 'Gmail', color: '#EA4335' }
       ];
       
       // Preload images
       p.preload = () => {
-        // For now, we'll still use circle fallbacks as we don't have the actual logo images
+        socialPlatforms.forEach(platform => {
+          logoImages[platform.platform] = p.loadImage(`/social-icons/${platform.platform}.png`);
+        });
       };
       
       p.setup = () => {
@@ -62,12 +63,11 @@ const P5SocialIcons: React.FC = () => {
             x: p.random(p.width),
             y: p.random(p.height),
             size: size,
-            icon: platform.icon,
             speedX: p.random(-1, 1) * speedMultiplier,
             speedY: p.random(-1, 1) * speedMultiplier,
             opacity: p.random(70, 95),
             color: platform.color,
-            logo: platform.logo
+            platform: platform.platform
           });
         }
       };
@@ -134,16 +134,24 @@ const P5SocialIcons: React.FC = () => {
           p.fill(rgb.r, rgb.g, rgb.b, icon.opacity * 0.2);
           p.ellipse(icon.x, icon.y, glowSize, glowSize);
           
-          // Draw the main circle with the brand color
-          p.fill(rgb.r, rgb.g, rgb.b, icon.opacity);
-          p.circle(icon.x, icon.y, icon.size);
-          
-          // Draw the icon letter in white with a better font styling
-          p.fill(255, 255, 255, icon.opacity + 10);
-          p.textSize(icon.size * 0.45);
-          p.textAlign(p.CENTER, p.CENTER);
-          p.textStyle(p.BOLD);
-          p.text(icon.icon.toUpperCase(), icon.x, icon.y);
+          // Draw the actual logo image
+          if (logoImages[icon.platform]) {
+            p.push();
+            p.imageMode(p.CENTER);
+            p.tint(255, icon.opacity * 2.55); // Convert opacity to 0-255 range
+            p.image(logoImages[icon.platform], icon.x, icon.y, icon.size, icon.size);
+            p.pop();
+          } else {
+            // Fallback to circle with first letter if image not loaded
+            p.fill(rgb.r, rgb.g, rgb.b, icon.opacity);
+            p.circle(icon.x, icon.y, icon.size);
+            
+            p.fill(255, 255, 255, icon.opacity + 10);
+            p.textSize(icon.size * 0.45);
+            p.textAlign(p.CENTER, p.CENTER);
+            p.textStyle(p.BOLD);
+            p.text(icon.platform.charAt(0).toUpperCase(), icon.x, icon.y);
+          }
         }
       };
       
