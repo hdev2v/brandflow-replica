@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { scrollToSection } from '@/lib/utils';
+import { scrollToSection } from '@/lib/animation';
 import Button from './Button';
 import { cn } from '@/lib/utils';
 
