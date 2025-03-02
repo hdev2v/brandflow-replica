@@ -1,5 +1,6 @@
 
 import React from 'react';
+import P5SocialIcons from './P5SocialIcons';
 
 interface FeatureCardProps {
   title: string;
@@ -90,15 +91,18 @@ const FeaturesSection = () => {
           </div>
           
           {/* Social Media Image Below */}
-          <div className="mx-auto mt-16 scale-in-element transform transition-all duration-1000 opacity-0 translate-y-0">
+          <div className="mx-auto mt-16 scale-in-element transform transition-all duration-1000 opacity-0 translate-y-0 relative">
             <img 
               src="/lovable-uploads/9221e27b-dba9-4577-83fe-76fafe0a012a.png" 
               alt="Social Media Icons" 
-              className="w-full max-w-sm mx-auto rounded-lg animate-float" 
+              className="w-full max-w-sm mx-auto rounded-lg animate-float relative z-10" 
             />
           </div>
         </div>
       </div>
+      
+      {/* P5.js Social Icons Animation */}
+      <P5SocialIcons />
       
       {/* Background decoration */}
       <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
