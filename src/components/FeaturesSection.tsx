@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface FeatureCardProps {
@@ -11,12 +12,12 @@ const FeatureCard = ({
   description,
   icon
 }: FeatureCardProps) => {
-  return <div className="glass-card p-8 fade-in-element">
-      <div className="h-12 w-12 flex items-center justify-center rounded-full bg-secondary mb-6">
+  return <div className="glass-card p-6 fade-in-element flex flex-col items-center text-center h-full">
+      <div className="h-12 w-12 flex items-center justify-center rounded-full bg-primary/20 mb-4">
         {icon}
       </div>
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
+      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <p className="text-muted-foreground text-sm">{description}</p>
     </div>;
 };
 
@@ -68,23 +69,25 @@ const FeaturesSection = () => {
     }
   ];
 
-  return <section id="features" className="viewport-section py-24 px-6 bg-secondary/30">
-      <div className="max-w-7xl mx-auto">
+  return <section id="features" className="viewport-section py-24 px-6 bg-secondary/30 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 reveal-right">Our Services</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto reveal-left">En kanal räcker inte längre. Man måste skapa sig en helhetsbild som man kan följa genom alla kanaler. Jag hjälper dig att nå dina kunder på rätt sätt, med rätt budskap och möta dina förväntningar.</p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="order-2 lg:order-1 scale-in-element transform transition-all duration-1000 opacity-0 translate-x-[-50px]">
+        <div className="grid grid-cols-1 gap-8 items-center">
+          {/* Social Media Image in Center */}
+          <div className="mx-auto scale-in-element transform transition-all duration-1000 opacity-0 translate-y-0">
             <img 
               src="/lovable-uploads/9221e27b-dba9-4577-83fe-76fafe0a012a.png" 
               alt="Social Media Icons" 
-              className="w-full max-w-md mx-auto rounded-lg animate-float" 
+              className="w-full max-w-sm mx-auto rounded-lg animate-float shadow-xl" 
             />
           </div>
           
-          <div className="order-1 lg:order-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Feature Cards in Ring Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mt-12">
             {features.map((feature, index) => (
               <FeatureCard 
                 key={index} 
@@ -96,6 +99,10 @@ const FeaturesSection = () => {
           </div>
         </div>
       </div>
+      
+      {/* Background decoration */}
+      <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+      <div className="absolute -top-20 -left-20 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
     </section>;
 };
 
