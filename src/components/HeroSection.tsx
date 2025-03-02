@@ -40,10 +40,10 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="pt-32 pb-24 md:pt-36 md:pb-32 px-6 bg-black text-white">
+    <section id="home" className="pt-20 md:pt-32 pb-24 px-4 md:px-6 bg-black text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="order-2 lg:order-1">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="order-2 lg:order-1 z-10">
             <h2 
               ref={titleRef}
               className="text-2xl md:text-3xl font-display font-semibold opacity-0 mb-3 text-pink-500"
@@ -75,7 +75,8 @@ const HeroSection = () => {
             </div>
           </div>
           
-          <div className="order-1 lg:order-2 relative">
+          <div className="order-1 lg:order-2 relative mb-8 lg:mb-0">
+            {/* Main profile image */}
             <div className="relative rounded-3xl overflow-hidden">
               <img 
                 src="/lovable-uploads/27bac0b0-9f6d-4194-8e1b-57dd4880699c.png"
@@ -84,13 +85,19 @@ const HeroSection = () => {
               />
             </div>
             
-            <div className="absolute right-0 top-10 scale-75 md:scale-100 origin-top-right">
+            {/* Top floating element - smaller on mobile */}
+            <div className="absolute -right-4 top-4 lg:right-0 lg:top-10 scale-50 md:scale-75 lg:scale-100 origin-top-right z-10">
               <div className="grid grid-cols-3 grid-rows-2 gap-1 w-[300px]">
-                <img src="/lovable-uploads/fd2432ff-85d3-4bbe-9360-481a252360fa.png" alt="Social Media Gallery" className="col-span-3 w-full h-auto rounded-lg" />
+                <img 
+                  src="/lovable-uploads/fd2432ff-85d3-4bbe-9360-481a252360fa.png" 
+                  alt="Social Media Gallery" 
+                  className="col-span-3 w-full h-auto rounded-lg shadow-lg" 
+                />
               </div>
             </div>
             
-            <div className="absolute -bottom-10 md:-bottom-20 -right-5 scale-75 md:scale-100 origin-bottom-right">
+            {/* Bottom floating element - smaller on mobile */}
+            <div className="absolute -bottom-4 -right-4 lg:-bottom-20 lg:-right-5 scale-50 md:scale-75 lg:scale-100 origin-bottom-right z-10">
               <img 
                 src="/lovable-uploads/ffad4bf2-ff2e-4fd9-bda9-f567e36c7250.png" 
                 alt="Instagram Stats" 
