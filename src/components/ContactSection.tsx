@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Button from './Button';
 
@@ -78,7 +77,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-medium">Maila mig på</h4>
-                  <p className="text-gray-400">hello@nadia.se</p>
+                  <p className="text-gray-400">nadia@nadianasser.com</p>
                 </div>
               </div>
               

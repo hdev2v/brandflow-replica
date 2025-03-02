@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import Button from './Button';
 
@@ -9,27 +8,19 @@ const HeroSection = () => {
   const ctaRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    if (titleRef.current) {
-      titleRef.current.classList.add('animate-slide-down');
-    }
+    // Apply animation classes without initially setting elements to opacity-0
+    const animateElement = (element: HTMLElement | null, delay: number) => {
+      if (element) {
+        setTimeout(() => {
+          element.classList.add('animate-fade-in');
+        }, delay);
+      }
+    };
     
-    if (subtitleRef.current) {
-      setTimeout(() => {
-        subtitleRef.current?.classList.add('animate-slide-down');
-      }, 200);
-    }
-    
-    if (descriptionRef.current) {
-      setTimeout(() => {
-        descriptionRef.current?.classList.add('animate-slide-down');
-      }, 300);
-    }
-    
-    if (ctaRef.current) {
-      setTimeout(() => {
-        ctaRef.current?.classList.add('animate-slide-up');
-      }, 400);
-    }
+    animateElement(titleRef.current, 100);
+    animateElement(subtitleRef.current, 200);
+    animateElement(descriptionRef.current, 300);
+    animateElement(ctaRef.current, 400);
   }, []);
 
   const scrollToContact = () => {
@@ -46,28 +37,27 @@ const HeroSection = () => {
           <div className="order-2 lg:order-1 z-10">
             <h2 
               ref={titleRef}
-              className="text-2xl md:text-3xl font-display font-semibold opacity-0 mb-3 text-pink-500"
+              className="text-2xl md:text-3xl font-display font-semibold mb-3 text-pink-500"
             >
               Hej jag heter Nadia!
             </h2>
             
             <h1 
               ref={subtitleRef}
-              className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight opacity-0 mb-6"
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-6"
             >
               Jag hjälper dig växa med sociala medier
             </h1>
             
             <p 
               ref={descriptionRef}
-              className="text-lg md:text-xl text-gray-300 mb-8 opacity-0 max-w-xl"
+              className="text-lg md:text-xl text-gray-300 mb-8 max-w-xl"
             >
               Upptäck hur sociala medier kan ge ditt varumärke riktiga resultat – även om du inte trott att det var möjligt tidigare.
             </p>
             
             <div 
               ref={ctaRef}
-              className="opacity-0"
             >
               <Button size="lg" onClick={scrollToContact}>
                 Boka gratis konsultation
