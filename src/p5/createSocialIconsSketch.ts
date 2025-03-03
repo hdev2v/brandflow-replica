@@ -1,3 +1,4 @@
+
 import p5 from 'p5';
 import { SocialIcon } from '@/types/socialIcons';
 import { socialPlatforms } from '@/config/socialPlatforms';
@@ -6,7 +7,8 @@ import {
   applyMouseRepulsion, 
   applyCardTargeting, 
   updateIconPosition, 
-  drawIcon 
+  drawIcon,
+  createIconsAtPosition
 } from './helpers';
 
 interface ServiceCardRect {
@@ -23,6 +25,9 @@ interface SketchProps {
   getMousePos: () => { x: number, y: number };
   getHoveredCard: () => ServiceCardRect | null;
   getServiceCards: () => ServiceCardRect[];
+  getMouseClicked: () => boolean;
+  getClickPos: () => { x: number, y: number };
+  resetMouseClick: () => void;
   setIconsRef: (icons: SocialIcon[]) => void;
 }
 
@@ -32,6 +37,9 @@ export const createSocialIconsSketch = ({
   getMousePos,
   getHoveredCard,
   getServiceCards,
+  getMouseClicked,
+  getClickPos,
+  resetMouseClick,
   setIconsRef
 }: SketchProps) => {
   return (p: p5) => {
@@ -99,6 +107,8 @@ export const createSocialIconsSketch = ({
       const mousePos = getMousePos();
       const hoveredCard = getHoveredCard();
       const serviceCards = getServiceCards();
+      const mouseClicked = getMouseClicked();
+      const clickPos = getClickPos();
       
       // Get mouse position relative to canvas
       const mouseX = mousePos.x - containerRef.current!.getBoundingClientRect().left;
@@ -114,6 +124,26 @@ export const createSocialIconsSketch = ({
           y: canvasTop
         };
       });
+      
+      // Handle mouse clicks - create new icons
+      if (mouseClicked) {
+        const canvasClickX = clickPos.x - containerRef.current!.getBoundingClientRect().left;
+        const canvasClickY = clickPos.y - containerRef.current!.getBoundingClientRect().top;
+        
+        // Create 3-5 new icons at click position
+        const newIcons = createIconsAtPosition(
+          p,
+          canvasClickX,
+          canvasClickY,
+          p.random(3, 6),
+          socialPlatforms
+        );
+        
+        icons.push(...newIcons);
+        
+        // Reset mouse clicked state
+        resetMouseClick();
+      }
       
       // Update and display icons
       for (let i = 0; i < icons.length; i++) {

@@ -17,13 +17,19 @@ interface UseP5SocialIconsSketchProps {
   mousePos?: { x: number, y: number };
   hoveredCard?: ServiceCardRect | null;
   serviceCards?: ServiceCardRect[];
+  mouseClicked?: boolean;
+  clickPos?: { x: number, y: number };
+  resetMouseClick?: () => void;
 }
 
 export const useP5SocialIconsSketch = ({ 
   containerRef, 
   mousePos = { x: 0, y: 0 }, 
   hoveredCard = null,
-  serviceCards = []
+  serviceCards = [],
+  mouseClicked = false,
+  clickPos = { x: 0, y: 0 },
+  resetMouseClick = () => {}
 }: UseP5SocialIconsSketchProps) => {
   const sketchRef = useRef<p5 | null>(null);
   const [loading, setLoading] = useState(true);
@@ -39,6 +45,9 @@ export const useP5SocialIconsSketch = ({
       getMousePos: () => mousePos,
       getHoveredCard: () => hoveredCard,
       getServiceCards: () => serviceCards,
+      getMouseClicked: () => mouseClicked,
+      getClickPos: () => clickPos,
+      resetMouseClick,
       setIconsRef: (icons) => {
         iconListRef.current = icons;
       }

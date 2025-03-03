@@ -15,11 +15,17 @@ const P5SocialIcons: React.FC = () => {
   const [mousePos, setMousePos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
   const [hoveredCard, setHoveredCard] = useState<ServiceCardRect | null>(null);
   const [serviceCards, setServiceCards] = useState<ServiceCardRect[]>([]);
+  const [mouseClicked, setMouseClicked] = useState<boolean>(false);
+  const [clickPos, setClickPos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+  
   const { loading } = useP5SocialIconsSketch({ 
     containerRef: canvasRef,
     mousePos,
     hoveredCard,
-    serviceCards
+    serviceCards,
+    mouseClicked,
+    clickPos,
+    resetMouseClick: () => setMouseClicked(false)
   });
 
   // Track mouse position
@@ -34,7 +40,20 @@ const P5SocialIcons: React.FC = () => {
     };
   }, []);
 
-  // Find and track service cards - the issue was here!
+  // Handle mouse clicks
+  useEffect(() => {
+    const handleMouseClick = (e: MouseEvent) => {
+      setMouseClicked(true);
+      setClickPos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('click', handleMouseClick);
+    return () => {
+      window.removeEventListener('click', handleMouseClick);
+    };
+  }, []);
+
+  // Find and track service cards
   useEffect(() => {
     const updateServiceCards = () => {
       const cards = Array.from(document.querySelectorAll('.glass-card')).map((card, id) => {
@@ -60,7 +79,7 @@ const P5SocialIcons: React.FC = () => {
     return () => {
       window.removeEventListener('resize', updateServiceCards);
     };
-  }, []); // Empty dependency array means this only runs once on mount
+  }, []);
 
   // Separate effect for hover detection using the current serviceCards state
   useEffect(() => {
@@ -81,7 +100,7 @@ const P5SocialIcons: React.FC = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [serviceCards]); // Only re-run when serviceCards changes
+  }, [serviceCards]);
 
   return (
     <div className="relative w-full h-full">
@@ -92,8 +111,7 @@ const P5SocialIcons: React.FC = () => {
       )}
       <div 
         ref={canvasRef} 
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
+        className="absolute inset-0"
       />
     </div>
   );

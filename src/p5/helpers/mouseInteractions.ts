@@ -2,6 +2,7 @@
 import p5 from 'p5';
 import { SocialIcon } from '@/types/socialIcons';
 import { SKETCH_CONFIG } from '../socialIconsSketchConfig';
+import { SocialPlatformConfig } from '@/config/socialPlatforms';
 
 // Helper function to handle mouse repulsion
 export const applyMouseRepulsion = (p: p5, icon: SocialIcon, mouseX: number, mouseY: number): void => {
@@ -82,4 +83,36 @@ export const applyCardTargeting = (
   const dy = icon.targetY - icon.y;
   icon.speedX = p.lerp(icon.speedX, dx * SKETCH_CONFIG.GATHER_STRENGTH, 0.1);
   icon.speedY = p.lerp(icon.speedY, dy * SKETCH_CONFIG.GATHER_STRENGTH, 0.1);
+};
+
+// Helper function to create new icons at click position
+export const createIconsAtPosition = (
+  p: p5,
+  x: number,
+  y: number,
+  count: number,
+  socialPlatforms: SocialPlatformConfig[]
+): SocialIcon[] => {
+  const newIcons: SocialIcon[] = [];
+  
+  for (let i = 0; i < count; i++) {
+    const platform = p.random(socialPlatforms);
+    const size = p.random(SKETCH_CONFIG.ICON_MIN_SIZE, SKETCH_CONFIG.ICON_MAX_SIZE);
+    const angle = p.random(p.TWO_PI);
+    const speed = p.random(1, 3);
+    
+    newIcons.push({
+      x: x,
+      y: y,
+      size: size,
+      speedX: p.cos(angle) * speed,
+      speedY: p.sin(angle) * speed,
+      opacity: p.random(70, 95),
+      color: platform.color,
+      platform: platform.platform,
+      isTargeting: false
+    });
+  }
+  
+  return newIcons;
 };
