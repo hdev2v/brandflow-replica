@@ -1,0 +1,53 @@
+
+import p5 from 'p5';
+import { SocialIcon } from '@/types/socialIcons';
+import { SKETCH_CONFIG } from '../socialIconsSketchConfig';
+
+// Helper function to handle mouse repulsion
+export const applyMouseRepulsion = (p: p5, icon: SocialIcon, mouseX: number, mouseY: number): void => {
+  const dx = icon.x - mouseX;
+  const dy = icon.y - mouseY;
+  const distance = p.sqrt(dx * dx + dy * dy);
+  
+  if (distance < SKETCH_CONFIG.MOUSE_REPEL_RADIUS) {
+    // Calculate repulsion force (stronger when closer)
+    const force = p.map(distance, 0, SKETCH_CONFIG.MOUSE_REPEL_RADIUS, SKETCH_CONFIG.MOUSE_REPEL_STRENGTH, 0);
+    
+    // Add repulsion to velocity
+    icon.speedX += (dx / distance) * force;
+    icon.speedY += (dy / distance) * force;
+  } else {
+    // Natural movement with slight acceleration/deceleration
+    const noise = p.noise(icon.x * 0.01, icon.y * 0.01, p.frameCount * 0.01);
+    const accelerationFactor = p.map(noise, 0, 1, 0.98, 1.02);
+    
+    icon.speedX *= accelerationFactor;
+    icon.speedY *= accelerationFactor;
+  }
+};
+
+// Helper function to handle card targeting
+export const applyCardTargeting = (
+  p: p5, 
+  icon: SocialIcon, 
+  index: number, 
+  totalIcons: number,
+  cardCenterX: number, 
+  cardCenterY: number, 
+  cardWidth: number, 
+  cardHeight: number
+): void => {
+  // Calculate target position around the card
+  const angle = p.TWO_PI * (index / totalIcons);
+  const radius = p.max(cardWidth, cardHeight) * 0.8;
+  
+  icon.targetX = cardCenterX + p.cos(angle) * radius;
+  icon.targetY = cardCenterY + p.sin(angle) * radius;
+  icon.isTargeting = true;
+  
+  // Move toward target with easing
+  const dx = icon.targetX - icon.x;
+  const dy = icon.targetY - icon.y;
+  icon.speedX = p.lerp(icon.speedX, dx * SKETCH_CONFIG.GATHER_STRENGTH, 0.1);
+  icon.speedY = p.lerp(icon.speedY, dy * SKETCH_CONFIG.GATHER_STRENGTH, 0.1);
+};

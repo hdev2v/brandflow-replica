@@ -1,4 +1,3 @@
-
 import p5 from 'p5';
 import { SocialIcon } from '@/types/socialIcons';
 import { socialPlatforms } from '@/config/socialPlatforms';
@@ -8,7 +7,7 @@ import {
   applyCardTargeting, 
   updateIconPosition, 
   drawIcon 
-} from './socialIconsSketchHelpers';
+} from './helpers';
 
 interface ServiceCardRect {
   id: number;
