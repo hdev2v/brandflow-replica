@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { scrollToSection } from '@/lib/animation';
 import Button from './Button';
@@ -22,7 +21,7 @@ const Navbar = () => {
       }
       
       // Update active section based on scroll position
-      const sections = ['home', 'features', 'process', 'testimonials', 'contact'];
+      const sections = ['home', 'features', 'partners', 'testimonials', 'contact'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -44,7 +43,7 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', id: 'home' },
     { name: 'Features', id: 'features' },
-    { name: 'Process', id: 'process' },
+    { name: 'Partners', id: 'partners' },
     { name: 'Testimonials', id: 'testimonials' },
     { name: 'Contact', id: 'contact' }
   ];

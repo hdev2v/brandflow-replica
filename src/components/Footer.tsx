@@ -74,14 +74,14 @@ const Footer = () => {
               </li>
               <li>
                 <a 
-                  href="#process"
+                  href="#partners"
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollToSection('process');
+                    scrollToSection('partners');
                   }}
                   className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link"
                 >
-                  Process
+                  Partners
                 </a>
               </li>
               <li>

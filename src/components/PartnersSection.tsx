@@ -34,11 +34,11 @@ const PartnersSection = () => {
             </h2>
             <div className="flex flex-col items-center mt-8">
               <img 
-                src="/lovable-uploads/9b5da530-235d-4de4-a355-22b6c5c4e80c.png" 
-                alt="Miss Marry of Sweden logo" 
+                src="/lovable-uploads/6bcd3716-4032-48ca-9e74-84bf09c2a39b.png" 
+                alt="Tuesday Morning logo" 
                 className="h-12 mb-3 reveal-right"
               />
-              <p className="text-gray-600 reveal-right">Miss Marry of Sweden</p>
+              <p className="text-gray-600 reveal-right">Tuesday Morning</p>
             </div>
           </div>
           
