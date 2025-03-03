@@ -9,4 +9,7 @@ export interface SocialIcon {
   opacity: number;
   color: string;
   platform: string;
+  targetX?: number; // Target X position for gathering
+  targetY?: number; // Target Y position for gathering
+  isTargeting: boolean; // Whether icon is currently targeting
 }
