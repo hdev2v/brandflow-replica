@@ -12,4 +12,11 @@ export interface SocialIcon {
   targetX?: number; // Target X position for gathering
   targetY?: number; // Target Y position for gathering
   isTargeting: boolean; // Whether icon is currently targeting
+  vx?: number; // Velocity X - used in mouse interactions
+  vy?: number; // Velocity Y - used in mouse interactions
+  rotation?: number; // Rotation angle
+  rotationSpeed?: number; // Speed of rotation
+  image?: any; // Image object for the icon
+  alpha?: number; // Alpha/opacity for drawing
+  targetAlpha?: number; // Target alpha for animations
 }

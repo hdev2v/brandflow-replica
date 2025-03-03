@@ -87,13 +87,8 @@ export const createSocialIconsSketch = ({
       canvas.style('position', 'absolute');
       canvas.style('z-index', '1');
       
-      // Initialize icons
-      const initializedIcons = initializeIcons(
-        p, 
-        p.width, 
-        p.height, 
-        socialPlatforms
-      );
+      // Initialize icons with numerical parameter for count
+      const initializedIcons = initializeIcons(p, p.width, p.height, 20);
       icons.push(...initializedIcons);
       
       // Store icons in ref for external access
@@ -131,13 +126,8 @@ export const createSocialIconsSketch = ({
         const canvasClickY = clickPos.y - containerRef.current!.getBoundingClientRect().top;
         
         // Create 3-5 new icons at click position
-        const newIcons = createIconsAtPosition(
-          p,
-          canvasClickX,
-          canvasClickY,
-          p.random(3, 6),
-          socialPlatforms
-        );
+        const randomCount = Math.floor(p.random(3, 6));
+        const newIcons = createIconsAtPosition(p, canvasClickX, canvasClickY, randomCount, socialPlatforms);
         
         icons.push(...newIcons);
         

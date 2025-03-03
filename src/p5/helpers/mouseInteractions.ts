@@ -3,9 +3,13 @@ import p5 from 'p5';
 import { SocialIcon } from '@/types/socialIcons';
 
 // Repel icons from mouse cursor
-export const applyMouseRepulsion = (icon: SocialIcon, mouseX: number, mouseY: number, p: p5, serviceCards: any[]) => {
+export const applyMouseRepulsion = (p: p5, icon: SocialIcon, mouseX: number, mouseY: number) => {
   const mouseRepelDistance = 120;
   const repelForce = 2;
+  
+  // Initialize vx and vy if they don't exist
+  if (icon.vx === undefined) icon.vx = 0;
+  if (icon.vy === undefined) icon.vy = 0;
   
   // Calculate distance between icon and mouse
   const d = p.dist(icon.x, icon.y, mouseX, mouseY);
@@ -36,76 +40,59 @@ export const applyMouseRepulsion = (icon: SocialIcon, mouseX: number, mouseY: nu
       icon.vy += p.sin(angle) * repelStrength;
     }
   }
-
-  // Avoid service cards if any are provided
-  if (serviceCards && serviceCards.length > 0) {
-    for (const card of serviceCards) {
-      // Calculate if icon is inside or close to the card
-      if (
-        icon.x > card.x - 20 && 
-        icon.x < card.x + card.width + 20 && 
-        icon.y > card.y - 20 && 
-        icon.y < card.y + card.height + 20
-      ) {
-        // Find the closest edge to push away from
-        const edgeDistances = [
-          { edge: 'left', dist: Math.abs(icon.x - card.x) },
-          { edge: 'right', dist: Math.abs(icon.x - (card.x + card.width)) },
-          { edge: 'top', dist: Math.abs(icon.y - card.y) },
-          { edge: 'bottom', dist: Math.abs(icon.y - (card.y + card.height)) }
-        ];
-        
-        // Sort to find closest edge
-        edgeDistances.sort((a, b) => a.dist - b.dist);
-        const closestEdge = edgeDistances[0].edge;
-        
-        // Apply force based on closest edge
-        const pushForce = 1.5;
-        switch (closestEdge) {
-          case 'left':
-            icon.vx -= pushForce;
-            break;
-          case 'right':
-            icon.vx += pushForce;
-            break;
-          case 'top':
-            icon.vy -= pushForce;
-            break;
-          case 'bottom':
-            icon.vy += pushForce;
-            break;
-        }
-      }
-    }
-  }
 };
 
 // Apply targeting towards a card when hovering
-export const applyCardTargeting = (icon: SocialIcon, hoveredCard: any, p: p5) => {
-  if (!hoveredCard) return;
+export const applyCardTargeting = (
+  p: p5,
+  icon: SocialIcon,
+  iconIndex: number,
+  totalIcons: number,
+  targetX: number,
+  targetY: number,
+  cardWidth: number,
+  cardHeight: number
+) => {
+  // Initialize vx and vy if they don't exist
+  if (icon.vx === undefined) icon.vx = 0;
+  if (icon.vy === undefined) icon.vy = 0;
   
-  const targetX = hoveredCard.x + hoveredCard.width / 2;
-  const targetY = hoveredCard.y + hoveredCard.height / 2;
+  // Mark this icon as targeting
+  icon.isTargeting = true;
   
-  // Calculate distance to target
-  const d = p.dist(icon.x, icon.y, targetX, targetY);
+  // Calculate a unique position around the card for this icon
+  const angle = (iconIndex / totalIcons) * p.TWO_PI;
+  const radius = Math.min(cardWidth, cardHeight) * 0.7;
   
-  // Only apply targeting if within reasonable distance
-  if (d < 300) {
-    const angle = p.atan2(targetY - icon.y, targetX - icon.x);
-    const force = p.map(d, 0, 300, 0, 0.5); // Gentle force
-    
-    icon.vx += p.cos(angle) * force;
-    icon.vy += p.sin(angle) * force;
+  // Set the target position
+  icon.targetX = targetX + p.cos(angle) * radius;
+  icon.targetY = targetY + p.sin(angle) * radius;
+  
+  // Calculate direction and distance to target
+  const dx = icon.targetX - icon.x;
+  const dy = icon.targetY - icon.y;
+  const dist = p.sqrt(dx * dx + dy * dy);
+  
+  // Apply force towards target
+  const targetingStrength = 0.05;
+  if (dist > 5) {
+    icon.vx += (dx / dist) * targetingStrength;
+    icon.vy += (dy / dist) * targetingStrength;
   }
 };
 
 // Create new icons at a position (for mouse click)
-export const createIconsAtPosition = (p: p5, x: number, y: number, iconImages: p5.Image[], numIcons = 5) => {
+export const createIconsAtPosition = (
+  p: p5,
+  x: number,
+  y: number,
+  numIcons: number,
+  socialPlatforms: any[]
+) => {
   const newIcons: SocialIcon[] = [];
   
   for (let i = 0; i < numIcons; i++) {
-    const randomImage = iconImages[Math.floor(p.random(0, iconImages.length))];
+    const randomPlatform = socialPlatforms[Math.floor(p.random(0, socialPlatforms.length))];
     const randomSize = p.random(24, 40);
     const randomAngle = p.random(0, p.TWO_PI);
     const randomSpeed = p.random(2, 5);
@@ -113,12 +100,17 @@ export const createIconsAtPosition = (p: p5, x: number, y: number, iconImages: p
     const newIcon: SocialIcon = {
       x: x,
       y: y,
+      size: randomSize,
+      speedX: p.cos(randomAngle) * randomSpeed * 0.1,
+      speedY: p.sin(randomAngle) * randomSpeed * 0.1,
       vx: p.cos(randomAngle) * randomSpeed,
       vy: p.sin(randomAngle) * randomSpeed,
-      size: randomSize,
+      opacity: 0, // Start transparent
+      color: randomPlatform.color,
+      platform: randomPlatform.platform,
+      isTargeting: false,
       rotation: p.random(0, p.TWO_PI),
       rotationSpeed: p.random(-0.05, 0.05),
-      image: randomImage,
       alpha: 0,
       targetAlpha: 255
     };
