@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { scrollToSection } from '@/lib/animation';
 import Button from './Button';
@@ -7,6 +8,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isOnDarkSection, setIsOnDarkSection] = useState(true);
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,6 +30,10 @@ const Navbar = () => {
           const rect = element.getBoundingClientRect();
           if (rect.top <= 100 && rect.bottom >= 100) {
             setActiveSection(section);
+            
+            // Check if the current section has a white background
+            const isWhiteBackground = section === 'partners'; // Partners section has white background
+            setIsOnDarkSection(!isWhiteBackground);
             break;
           }
         }
@@ -42,7 +48,7 @@ const Navbar = () => {
   
   const navItems = [
     { name: 'Home', id: 'home' },
-    { name: 'Features', id: 'features' },
+    { name: 'Tjänster', id: 'features' },
     { name: 'Partners', id: 'partners' },
     { name: 'Testimonials', id: 'testimonials' },
     { name: 'Contact', id: 'contact' }
@@ -61,7 +67,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <a href="#home" className={cn(
             "text-2xl font-display font-bold tracking-tight",
-            !isScrolled && "text-white"
+            isScrolled 
+              ? isOnDarkSection ? "text-white" : "text-black"
+              : "text-white"
           )}>
             Brand<span className="font-light">Flow</span>
           </a>
@@ -80,8 +88,14 @@ const Navbar = () => {
               className={cn(
                 'nav-item text-sm font-medium transition-colors duration-200',
                 activeSection === item.id 
-                  ? isScrolled ? 'text-primary active' : 'text-white active' 
-                  : isScrolled ? 'text-muted-foreground hover:text-primary' : 'text-white/80 hover:text-white'
+                  ? isScrolled 
+                    ? isOnDarkSection ? "text-primary" : "text-primary"
+                    : "text-white active" 
+                  : isScrolled 
+                    ? isOnDarkSection 
+                      ? "text-white/80 hover:text-white" 
+                      : "text-black/80 hover:text-black"
+                    : "text-white/80 hover:text-white"
               )}
             >
               {item.name}
@@ -91,7 +105,8 @@ const Navbar = () => {
         
         <div className="hidden md:block">
           <Button variant="primary" size="md" className={cn(
-            !isScrolled && "bg-white text-primary hover:bg-white/90"
+            !isScrolled && "bg-white text-primary hover:bg-white/90",
+            isScrolled && !isOnDarkSection && "bg-primary text-white hover:bg-primary/90"
           )}>
             Get Started
           </Button>
@@ -101,7 +116,9 @@ const Navbar = () => {
         <button 
           className={cn(
             "block md:hidden p-2",
-            isScrolled ? "text-primary" : "text-white"
+            isScrolled 
+              ? isOnDarkSection ? "text-white" : "text-black"
+              : "text-white"
           )}
           onClick={toggleMenu}
           aria-label="Toggle menu"
