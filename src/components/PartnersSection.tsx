@@ -23,13 +23,13 @@ const PartnerLogo = ({ src, alt, className }: PartnerLogoProps) => {
 
 const PartnersSection = () => {
   return (
-    <section id="partners" className="viewport-section py-24 px-6 relative overflow-hidden">
+    <section id="partners" className="viewport-section py-24 px-6 relative overflow-hidden bg-white text-black">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center mb-16">
           {/* Quote Section */}
           <div className="max-w-3xl mx-auto mb-16">
             <div className="text-primary text-6xl font-serif mb-6 fade-in-element">"</div>
-            <h2 className="text-3xl md:text-4xl font-display mb-8 leading-relaxed fade-in-element">
+            <h2 className="text-3xl md:text-4xl font-display mb-8 leading-relaxed text-gray-800 fade-in-element">
               ...Vi uppskattar att du tog dig tid att förstå vårt varumärke...
             </h2>
             <div className="flex flex-col items-center mt-8">
@@ -38,13 +38,13 @@ const PartnersSection = () => {
                 alt="Miss Marry of Sweden logo" 
                 className="h-12 mb-3 reveal-right"
               />
-              <p className="text-muted-foreground reveal-right">Miss Marry of Sweden</p>
+              <p className="text-gray-600 reveal-right">Miss Marry of Sweden</p>
             </div>
           </div>
           
           {/* Partners heading and description */}
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 fade-in-element">Partners</h2>
-          <p className="text-lg text-muted-foreground mb-12 max-w-2xl fade-in-element">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900 fade-in-element">Partners</h2>
+          <p className="text-lg text-gray-600 mb-12 max-w-2xl fade-in-element">
             Vi har haft nöjet att arbeta med flera framstående företag som har sett verkliga resultat från våra sociala mediestrategier.
           </p>
           
@@ -74,7 +74,7 @@ const PartnersSection = () => {
         </div>
       </div>
       
-      {/* Decorative elements */}
+      {/* Decorative elements with lighter colors */}
       <div className="absolute -left-32 top-1/3 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute -right-32 bottom-1/3 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
     </section>
