@@ -34,7 +34,7 @@ const P5SocialIcons: React.FC = () => {
     };
   }, []);
 
-  // Find and track service cards
+  // Find and track service cards - the issue was here!
   useEffect(() => {
     const updateServiceCards = () => {
       const cards = Array.from(document.querySelectorAll('.glass-card')).map((card, id) => {
@@ -56,7 +56,14 @@ const P5SocialIcons: React.FC = () => {
     // Update on resize
     window.addEventListener('resize', updateServiceCards);
     
-    // Check for hover on cards
+    // Return cleanup function
+    return () => {
+      window.removeEventListener('resize', updateServiceCards);
+    };
+  }, []); // Empty dependency array means this only runs once on mount
+
+  // Separate effect for hover detection using the current serviceCards state
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e;
       const hovered = serviceCards.find(card => 
@@ -70,12 +77,11 @@ const P5SocialIcons: React.FC = () => {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-
+    
     return () => {
-      window.removeEventListener('resize', updateServiceCards);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [serviceCards]);
+  }, [serviceCards]); // Only re-run when serviceCards changes
 
   return (
     <div className="relative w-full h-full">
