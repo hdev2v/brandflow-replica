@@ -1,117 +1,129 @@
 
 import p5 from 'p5';
 import { SocialIcon } from '@/types/socialIcons';
-import { SKETCH_CONFIG } from '../socialIconsSketchConfig';
-import { SocialPlatformConfig } from '@/config/socialPlatforms';
 
-// Helper function to handle mouse repulsion
-export const applyMouseRepulsion = (p: p5, icon: SocialIcon, mouseX: number, mouseY: number): void => {
-  const dx = icon.x - mouseX;
-  const dy = icon.y - mouseY;
-  const distance = p.sqrt(dx * dx + dy * dy);
+// Repel icons from mouse cursor
+export const applyMouseRepulsion = (icon: SocialIcon, mouseX: number, mouseY: number, p: p5, serviceCards: any[]) => {
+  const mouseRepelDistance = 120;
+  const repelForce = 2;
   
-  if (distance < SKETCH_CONFIG.MOUSE_REPEL_RADIUS) {
-    // Calculate repulsion force (stronger when closer)
-    const force = p.map(distance, 0, SKETCH_CONFIG.MOUSE_REPEL_RADIUS, SKETCH_CONFIG.MOUSE_REPEL_STRENGTH, 0);
-    
-    // Add repulsion to velocity
-    icon.speedX += (dx / distance) * force;
-    icon.speedY += (dy / distance) * force;
-  } else {
-    // Natural movement with slight acceleration/deceleration
-    const noise = p.noise(icon.x * 0.01, icon.y * 0.01, p.frameCount * 0.01);
-    const accelerationFactor = p.map(noise, 0, 1, 0.98, 1.02);
-    
-    icon.speedX *= accelerationFactor;
-    icon.speedY *= accelerationFactor;
+  // Calculate distance between icon and mouse
+  const d = p.dist(icon.x, icon.y, mouseX, mouseY);
+  
+  // Apply repulsion if mouse is close enough
+  if (d < mouseRepelDistance) {
+    const angle = p.atan2(icon.y - mouseY, icon.x - mouseX);
+    const force = p.map(d, 0, mouseRepelDistance, repelForce, 0);
+    icon.vx += p.cos(angle) * force;
+    icon.vy += p.sin(angle) * force;
   }
   
-  // Repel icons from the title area
-  const titleElement = document.getElementById('services-title');
-  if (titleElement) {
-    const titleRect = titleElement.getBoundingClientRect();
-    const containerRect = document.querySelector('.viewport-section')?.getBoundingClientRect();
+  // Add a "no-fly zone" for the partner section
+  const partnersSectionElement = document.getElementById('partners');
+  if (partnersSectionElement) {
+    const rect = partnersSectionElement.getBoundingClientRect();
+    const partnersCenterX = rect.left + rect.width / 2;
+    const partnersCenterY = rect.top + rect.height / 2;
     
-    if (containerRect) {
-      // Convert title coordinates to canvas coordinates
-      const titleX = titleRect.left + titleRect.width / 2 - containerRect.left;
-      const titleY = titleRect.top + titleRect.height / 2 - containerRect.top;
-      const titleWidth = titleRect.width * 1.5; // Make the repulsion area larger than the title
-      const titleHeight = titleRect.height * 2;
-      
-      // Check if icon is within or near the title area (with some margin)
-      const distX = Math.abs(icon.x - titleX);
-      const distY = Math.abs(icon.y - titleY);
-      
-      if (distX < titleWidth / 2 + 30 && distY < titleHeight / 2 + 20) {
-        // Calculate force direction away from title center
-        const forceX = icon.x - titleX;
-        const forceY = icon.y - titleY;
-        const forceMag = Math.sqrt(forceX * forceX + forceY * forceY);
+    // Calculate distance to partners section center
+    const distToPartners = p.dist(icon.x, icon.y, partnersCenterX, partnersCenterY);
+    
+    // If icon is in the partners section area, apply repulsion
+    if (distToPartners < rect.width / 2.5) {
+      const angle = p.atan2(icon.y - partnersCenterY, icon.x - partnersCenterX);
+      const repelStrength = p.map(distToPartners, 0, rect.width / 2.5, 1.5, 0);
+      icon.vx += p.cos(angle) * repelStrength;
+      icon.vy += p.sin(angle) * repelStrength;
+    }
+  }
+
+  // Avoid service cards if any are provided
+  if (serviceCards && serviceCards.length > 0) {
+    for (const card of serviceCards) {
+      // Calculate if icon is inside or close to the card
+      if (
+        icon.x > card.x - 20 && 
+        icon.x < card.x + card.width + 20 && 
+        icon.y > card.y - 20 && 
+        icon.y < card.y + card.height + 20
+      ) {
+        // Find the closest edge to push away from
+        const edgeDistances = [
+          { edge: 'left', dist: Math.abs(icon.x - card.x) },
+          { edge: 'right', dist: Math.abs(icon.x - (card.x + card.width)) },
+          { edge: 'top', dist: Math.abs(icon.y - card.y) },
+          { edge: 'bottom', dist: Math.abs(icon.y - (card.y + card.height)) }
+        ];
         
-        if (forceMag > 0) {
-          // Apply stronger repulsion force - title area is a no-fly zone
-          icon.speedX += (forceX / forceMag) * 1.0;
-          icon.speedY += (forceY / forceMag) * 1.0;
+        // Sort to find closest edge
+        edgeDistances.sort((a, b) => a.dist - b.dist);
+        const closestEdge = edgeDistances[0].edge;
+        
+        // Apply force based on closest edge
+        const pushForce = 1.5;
+        switch (closestEdge) {
+          case 'left':
+            icon.vx -= pushForce;
+            break;
+          case 'right':
+            icon.vx += pushForce;
+            break;
+          case 'top':
+            icon.vy -= pushForce;
+            break;
+          case 'bottom':
+            icon.vy += pushForce;
+            break;
         }
       }
     }
   }
 };
 
-// Helper function to handle card targeting
-export const applyCardTargeting = (
-  p: p5, 
-  icon: SocialIcon, 
-  index: number, 
-  totalIcons: number,
-  cardCenterX: number, 
-  cardCenterY: number, 
-  cardWidth: number, 
-  cardHeight: number
-): void => {
-  // Calculate target position around the card
-  const angle = p.TWO_PI * (index / totalIcons);
-  const radius = p.max(cardWidth, cardHeight) * 0.8;
+// Apply targeting towards a card when hovering
+export const applyCardTargeting = (icon: SocialIcon, hoveredCard: any, p: p5) => {
+  if (!hoveredCard) return;
   
-  icon.targetX = cardCenterX + p.cos(angle) * radius;
-  icon.targetY = cardCenterY + p.sin(angle) * radius;
-  icon.isTargeting = true;
+  const targetX = hoveredCard.x + hoveredCard.width / 2;
+  const targetY = hoveredCard.y + hoveredCard.height / 2;
   
-  // Move toward target with easing
-  const dx = icon.targetX - icon.x;
-  const dy = icon.targetY - icon.y;
-  icon.speedX = p.lerp(icon.speedX, dx * SKETCH_CONFIG.GATHER_STRENGTH, 0.1);
-  icon.speedY = p.lerp(icon.speedY, dy * SKETCH_CONFIG.GATHER_STRENGTH, 0.1);
+  // Calculate distance to target
+  const d = p.dist(icon.x, icon.y, targetX, targetY);
+  
+  // Only apply targeting if within reasonable distance
+  if (d < 300) {
+    const angle = p.atan2(targetY - icon.y, targetX - icon.x);
+    const force = p.map(d, 0, 300, 0, 0.5); // Gentle force
+    
+    icon.vx += p.cos(angle) * force;
+    icon.vy += p.sin(angle) * force;
+  }
 };
 
-// Helper function to create new icons at click position
-export const createIconsAtPosition = (
-  p: p5,
-  x: number,
-  y: number,
-  count: number,
-  socialPlatforms: SocialPlatformConfig[]
-): SocialIcon[] => {
+// Create new icons at a position (for mouse click)
+export const createIconsAtPosition = (p: p5, x: number, y: number, iconImages: p5.Image[], numIcons = 5) => {
   const newIcons: SocialIcon[] = [];
   
-  for (let i = 0; i < count; i++) {
-    const platform = p.random(socialPlatforms);
-    const size = p.random(SKETCH_CONFIG.ICON_MIN_SIZE, SKETCH_CONFIG.ICON_MAX_SIZE);
-    const angle = p.random(p.TWO_PI);
-    const speed = p.random(1, 3);
+  for (let i = 0; i < numIcons; i++) {
+    const randomImage = iconImages[Math.floor(p.random(0, iconImages.length))];
+    const randomSize = p.random(24, 40);
+    const randomAngle = p.random(0, p.TWO_PI);
+    const randomSpeed = p.random(2, 5);
     
-    newIcons.push({
+    const newIcon: SocialIcon = {
       x: x,
       y: y,
-      size: size,
-      speedX: p.cos(angle) * speed,
-      speedY: p.sin(angle) * speed,
-      opacity: p.random(70, 95),
-      color: platform.color,
-      platform: platform.platform,
-      isTargeting: false
-    });
+      vx: p.cos(randomAngle) * randomSpeed,
+      vy: p.sin(randomAngle) * randomSpeed,
+      size: randomSize,
+      rotation: p.random(0, p.TWO_PI),
+      rotationSpeed: p.random(-0.05, 0.05),
+      image: randomImage,
+      alpha: 0,
+      targetAlpha: 255
+    };
+    
+    newIcons.push(newIcon);
   }
   
   return newIcons;
