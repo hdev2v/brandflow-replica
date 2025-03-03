@@ -102,16 +102,6 @@ const P5SocialIcons: React.FC = () => {
       p.draw = () => {
         p.clear();
         
-        // Draw shadow first for a subtle layered effect
-        for (let i = 0; i < icons.length; i++) {
-          const icon = icons[i];
-          
-          // Draw subtle shadow
-          p.noStroke();
-          p.fill(0, 0, 0, 5);
-          p.ellipse(icon.x + 2, icon.y + 2, icon.size + 4, icon.size + 4);
-        }
-        
         // Update and display icons
         for (let i = 0; i < icons.length; i++) {
           const icon = icons[i];
@@ -141,11 +131,7 @@ const P5SocialIcons: React.FC = () => {
             icon.speedY += p.random(-0.1, 0.1); // Add slight randomness
           }
           
-          // Apply a subtle glow effect
-          const glowSize = icon.size * 1.2;
-          p.noStroke();
-          
-          // Convert hex color to RGB for the glow
+          // Convert hex color to RGB for the icon background if needed
           const hexToRgb = (hex: string) => {
             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             return result ? {
@@ -157,15 +143,11 @@ const P5SocialIcons: React.FC = () => {
           
           const rgb = hexToRgb(icon.color);
           
-          // Draw subtle glow
-          p.fill(rgb.r, rgb.g, rgb.b, icon.opacity * 0.2);
-          p.ellipse(icon.x, icon.y, glowSize, glowSize);
-          
           // Check if the image is loaded successfully
           const imageLoaded = logoImages[icon.platform] && loadedImages[icon.platform];
           
           if (imageLoaded) {
-            // Draw the actual logo image
+            // Draw the actual logo image without any glow effect
             p.push();
             p.imageMode(p.CENTER);
             p.tint(255, icon.opacity * 2.55); // Convert opacity to 0-255 range
