@@ -1,0 +1,13 @@
+
+// Configuration for the p5 social icons sketch
+export const SKETCH_CONFIG = {
+  NUM_ICONS: 20,
+  MOUSE_REPEL_RADIUS: 100,
+  MOUSE_REPEL_STRENGTH: 2,
+  GATHER_STRENGTH: 0.05,
+  RETURN_STRENGTH: 0.02,
+  MAX_SPEED: 3,
+  FRICTION: 0.95,
+  ICON_MIN_SIZE: 30,
+  ICON_MAX_SIZE: 60
+};
