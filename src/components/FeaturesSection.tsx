@@ -59,6 +59,7 @@ const FeaturesSection = () => {
             <path d="M6 20V14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
   }];
+  
   return <section id="features" className="viewport-section py-24 px-6 bg-secondary/30 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -89,4 +90,5 @@ const FeaturesSection = () => {
       <div className="absolute -top-20 -left-20 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
     </section>;
 };
+
 export default FeaturesSection;
