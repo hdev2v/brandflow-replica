@@ -24,6 +24,38 @@ export const applyMouseRepulsion = (p: p5, icon: SocialIcon, mouseX: number, mou
     icon.speedX *= accelerationFactor;
     icon.speedY *= accelerationFactor;
   }
+  
+  // Repel icons from the title area
+  const titleElement = document.getElementById('services-title');
+  if (titleElement) {
+    const titleRect = titleElement.getBoundingClientRect();
+    const containerRect = document.querySelector('.viewport-section')?.getBoundingClientRect();
+    
+    if (containerRect) {
+      // Convert title coordinates to canvas coordinates
+      const titleX = titleRect.left + titleRect.width / 2 - containerRect.left;
+      const titleY = titleRect.top + titleRect.height / 2 - containerRect.top;
+      const titleWidth = titleRect.width * 1.5; // Make the repulsion area larger than the title
+      const titleHeight = titleRect.height * 2;
+      
+      // Check if icon is within or near the title area (with some margin)
+      const distX = Math.abs(icon.x - titleX);
+      const distY = Math.abs(icon.y - titleY);
+      
+      if (distX < titleWidth / 2 + 30 && distY < titleHeight / 2 + 20) {
+        // Calculate force direction away from title center
+        const forceX = icon.x - titleX;
+        const forceY = icon.y - titleY;
+        const forceMag = Math.sqrt(forceX * forceX + forceY * forceY);
+        
+        if (forceMag > 0) {
+          // Apply stronger repulsion force - title area is a no-fly zone
+          icon.speedX += (forceX / forceMag) * 1.0;
+          icon.speedY += (forceY / forceMag) * 1.0;
+        }
+      }
+    }
+  }
 };
 
 // Helper function to handle card targeting

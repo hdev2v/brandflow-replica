@@ -1,3 +1,4 @@
+
 import React from 'react';
 import P5SocialIcons from './P5SocialIcons';
 interface FeatureCardProps {
@@ -63,7 +64,7 @@ const FeaturesSection = () => {
   return <section id="features" className="viewport-section py-24 px-6 bg-secondary/30 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 reveal-right">Our Services</h2>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 reveal-right" id="services-title">Våra tjänster</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto reveal-left">En kanal räcker inte längre. Man måste skapa sig en helhetsbild som man kan följa genom alla kanaler. Jag hjälper dig att nå dina kunder på rätt sätt, med rätt budskap och möta dina förväntningar.</p>
         </div>
         
