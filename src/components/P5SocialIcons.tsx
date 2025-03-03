@@ -34,12 +34,12 @@ const P5SocialIcons: React.FC = () => {
         { platform: 'instagram', name: 'Instagram', color: '#E4405F' },
         { platform: 'youtube', name: 'YouTube', color: '#FF0000' },
         { platform: 'tiktok', name: 'TikTok', color: '#000000' },
-        { platform: 'twitter', name: 'Twitter', color: '#1DA1F2' },
+        { platform: 'x', name: 'X', color: '#000000' },
         { platform: 'snapchat', name: 'Snapchat', color: '#FFFC00' },
         { platform: 'linkedin', name: 'LinkedIn', color: '#0A66C2' },
-        { platform: 'pinterest', name: 'Pinterest', color: '#E60023' },
         { platform: 'whatsapp', name: 'WhatsApp', color: '#25D366' },
-        { platform: 'gmail', name: 'Gmail', color: '#EA4335' }
+        { platform: 'meta', name: 'Meta', color: '#0668E1' },
+        { platform: 'messenger', name: 'Messenger', color: '#00B2FF' }
       ];
       
       // Preload images with error handling
