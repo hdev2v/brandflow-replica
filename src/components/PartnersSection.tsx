@@ -48,12 +48,8 @@ const PartnersSection = () => {
             Vi har haft nöjet att arbeta med flera framstående företag som har sett verkliga resultat från våra sociala mediestrategier.
           </p>
           
-          {/* Partner Logos */}
+          {/* Partner Logos - Shifted positions */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 w-full scale-in-element">
-            <PartnerLogo 
-              src="/lovable-uploads/9b5da530-235d-4de4-a355-22b6c5c4e80c.png" 
-              alt="Miss Marry of Sweden" 
-            />
             <PartnerLogo 
               src="/lovable-uploads/6bcd3716-4032-48ca-9e74-84bf09c2a39b.png" 
               alt="Tuesday Morning" 
@@ -69,6 +65,10 @@ const PartnersSection = () => {
             <PartnerLogo 
               src="/lovable-uploads/93e04113-3be0-44c1-bf10-735d0f5af256.png" 
               alt="MyFundraise" 
+            />
+            <PartnerLogo 
+              src="/lovable-uploads/9b5da530-235d-4de4-a355-22b6c5c4e80c.png" 
+              alt="Miss Marry of Sweden" 
             />
           </div>
         </div>
