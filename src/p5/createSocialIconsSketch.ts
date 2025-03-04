@@ -4,14 +4,6 @@ import { SocialIcon } from '@/types/socialIcons';
 import { socialPlatforms } from '@/config/socialPlatforms';
 import { SKETCH_CONFIG } from './socialIconsSketchConfig';
 
-interface ServiceCardRect {
-  id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 interface SketchProps {
   containerRef: React.RefObject<HTMLDivElement>;
   onLoadingChange: (loading: boolean) => void;
@@ -35,6 +27,7 @@ export const createSocialIconsSketch = ({
     const icons: SocialIcon[] = [];
     const logoImages: Record<string, p5.Image> = {};
     const loadedImages: Record<string, boolean> = {};
+    let prevMouseClicked = false;
     
     // Preload images with error handling
     p.preload = () => {
@@ -107,8 +100,8 @@ export const createSocialIconsSketch = ({
         x,
         y,
         size,
-        speedX: vx * 0.1,
-        speedY: vy * 0.1,
+        speedX: vx,
+        speedY: vy,
         vx,
         vy,
         opacity: p.random(70, 95),
@@ -132,26 +125,35 @@ export const createSocialIconsSketch = ({
       const clickPos = getClickPos();
       
       // Get mouse position relative to canvas
-      const mouseX = mousePos.x - containerRef.current!.getBoundingClientRect().left;
-      const mouseY = mousePos.y - containerRef.current!.getBoundingClientRect().top;
+      const canvasRect = containerRef.current?.getBoundingClientRect();
+      if (!canvasRect) return;
+      
+      const mouseX = mousePos.x - canvasRect.left;
+      const mouseY = mousePos.y - canvasRect.top;
       
       // Handle mouse clicks - create new icons
-      if (mouseClicked) {
-        const canvasClickX = clickPos.x - containerRef.current!.getBoundingClientRect().left;
-        const canvasClickY = clickPos.y - containerRef.current!.getBoundingClientRect().top;
+      if (mouseClicked && !prevMouseClicked) {
+        prevMouseClicked = true;
+        
+        const canvasClickX = clickPos.x - canvasRect.left;
+        const canvasClickY = clickPos.y - canvasRect.top;
         
         // Only create icons if the click was within the canvas bounds
         if (canvasClickX >= 0 && canvasClickX <= p.width && 
             canvasClickY >= 0 && canvasClickY <= p.height) {
-          // Create 3-5 new icons at click position
-          const randomCount = Math.floor(p.random(3, 6));
-          for (let i = 0; i < randomCount; i++) {
+          
+          console.log('Creating new icons at', canvasClickX, canvasClickY);
+          
+          // Create new icons at click position
+          for (let i = 0; i < SKETCH_CONFIG.CLICK_SPAWN_COUNT; i++) {
             addIcon(canvasClickX, canvasClickY, false);
           }
         }
         
         // Reset mouse clicked state
         resetMouseClick();
+      } else if (!mouseClicked && prevMouseClicked) {
+        prevMouseClicked = false;
       }
       
       // Update and display icons
@@ -159,52 +161,61 @@ export const createSocialIconsSketch = ({
         const icon = icons[i];
         
         // Apply mouse repulsion
-        const mouseRepelDistance = 120;
-        const repelForce = 2;
-        
-        // Calculate distance between icon and mouse
         const d = p.dist(icon.x, icon.y, mouseX, mouseY);
         
         // Apply repulsion if mouse is close enough
-        if (d < mouseRepelDistance) {
+        if (d < SKETCH_CONFIG.MOUSE_REPEL_RADIUS) {
           const angle = p.atan2(icon.y - mouseY, icon.x - mouseX);
-          const force = p.map(d, 0, mouseRepelDistance, repelForce, 0);
+          const force = p.map(d, 0, SKETCH_CONFIG.MOUSE_REPEL_RADIUS, SKETCH_CONFIG.MOUSE_REPEL_STRENGTH, 0);
           icon.vx += p.cos(angle) * force;
           icon.vy += p.sin(angle) * force;
         }
         
-        // Update position
-        // Apply friction to gradually slow down
+        // Update velocity with friction
         icon.vx *= SKETCH_CONFIG.FRICTION;
         icon.vy *= SKETCH_CONFIG.FRICTION;
         
         // Limit max speed
-        icon.vx = p.constrain(icon.vx, -SKETCH_CONFIG.MAX_SPEED, SKETCH_CONFIG.MAX_SPEED);
-        icon.vy = p.constrain(icon.vy, -SKETCH_CONFIG.MAX_SPEED, SKETCH_CONFIG.MAX_SPEED);
+        const speed = p.sqrt(icon.vx * icon.vx + icon.vy * icon.vy);
+        if (speed > SKETCH_CONFIG.MAX_SPEED) {
+          icon.vx = (icon.vx / speed) * SKETCH_CONFIG.MAX_SPEED;
+          icon.vy = (icon.vy / speed) * SKETCH_CONFIG.MAX_SPEED;
+        }
         
         // Update position
         icon.x += icon.vx;
         icon.y += icon.vy;
         
+        // Update rotation
+        if (icon.rotation !== undefined && icon.rotationSpeed !== undefined) {
+          icon.rotation += icon.rotationSpeed;
+        }
+        
         // Bounce off edges with slight randomization for more organic movement
         if (icon.x < 0 || icon.x > p.width) {
           icon.vx *= -1;
-          icon.vx += p.random(-0.1, 0.1); // Add slight randomness
+          icon.vx += p.random(-0.2, 0.2); // Add slight randomness
+          icon.x = p.constrain(icon.x, 0, p.width);
         }
         if (icon.y < 0 || icon.y > p.height) {
           icon.vy *= -1;
-          icon.vy += p.random(-0.1, 0.1); // Add slight randomness
+          icon.vy += p.random(-0.2, 0.2); // Add slight randomness
+          icon.y = p.constrain(icon.y, 0, p.height);
         }
         
         // Draw the icon
         const imageLoaded = logoImages[icon.platform] && loadedImages[icon.platform];
   
         if (imageLoaded) {
-          // Draw the actual logo image
+          // Draw the actual logo image with rotation
           p.push();
+          p.translate(icon.x, icon.y);
+          if (icon.rotation !== undefined) {
+            p.rotate(icon.rotation);
+          }
           p.imageMode(p.CENTER);
           p.tint(255, icon.opacity * 2.55); // Convert opacity to 0-255 range
-          p.image(logoImages[icon.platform], icon.x, icon.y, icon.size, icon.size);
+          p.image(logoImages[icon.platform], 0, 0, icon.size, icon.size);
           p.pop();
         } else {
           // Fallback to circle with first letter if image not loaded
@@ -214,24 +225,20 @@ export const createSocialIconsSketch = ({
             b: parseInt(icon.color.slice(5, 7), 16)
           };
           
-          p.fill(rgb.r, rgb.g, rgb.b, icon.opacity);
+          p.fill(rgb.r, rgb.g, rgb.b, icon.opacity * 2.55);
           p.circle(icon.x, icon.y, icon.size);
           
-          p.fill(255, 255, 255, icon.opacity + 10);
+          p.fill(255, 255, 255, icon.opacity * 2.55 + 25);
           p.textSize(icon.size * 0.45);
           p.textAlign(p.CENTER, p.CENTER);
           p.textStyle(p.BOLD);
           p.text(icon.platform.charAt(0).toUpperCase(), icon.x, icon.y);
         }
         
-        // Remove icons if they go too far outside the canvas (cleanup)
-        const padding = 100;
-        if (icon.x < -padding || icon.x > p.width + padding || 
-            icon.y < -padding || icon.y > p.height + padding) {
-          // Remove old icons once we have too many
-          if (icons.length > SKETCH_CONFIG.NUM_ICONS * 2) {
-            icons.splice(i, 1);
-          }
+        // Remove icons if we have too many
+        if (icons.length > SKETCH_CONFIG.NUM_ICONS * 3) {
+          // Remove the oldest icons first
+          icons.shift();
         }
       }
     };

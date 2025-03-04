@@ -17,21 +17,24 @@ const P5SocialIcons: React.FC = () => {
     resetMouseClick: () => setMouseClicked(false)
   });
 
-  // Track mouse position only when in the services section
+  // Track mouse position only when in the features section
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Check if within services section
-      const servicesSection = document.getElementById('features');
-      if (servicesSection) {
-        const rect = servicesSection.getBoundingClientRect();
-        const isInServicesSection = 
+      // Check if within features section
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        const rect = featuresSection.getBoundingClientRect();
+        const isInFeaturesSection = 
           e.clientX >= rect.left && 
           e.clientX <= rect.right && 
           e.clientY >= rect.top && 
           e.clientY <= rect.bottom;
         
-        if (isInServicesSection) {
-          setMousePos({ x: e.clientX, y: e.clientY });
+        if (isInFeaturesSection) {
+          setMousePos({ 
+            x: e.clientX, 
+            y: e.clientY 
+          });
           setIsInSection(true);
         } else {
           setIsInSection(false);
@@ -45,21 +48,27 @@ const P5SocialIcons: React.FC = () => {
     };
   }, []);
 
-  // Handle mouse clicks only when in services section
+  // Handle mouse clicks only when in features section
   useEffect(() => {
     const handleMouseClick = (e: MouseEvent) => {
-      const servicesSection = document.getElementById('features');
-      if (servicesSection) {
-        const rect = servicesSection.getBoundingClientRect();
-        const isInServicesSection = 
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        const rect = featuresSection.getBoundingClientRect();
+        const isInFeaturesSection = 
           e.clientX >= rect.left && 
           e.clientX <= rect.right && 
           e.clientY >= rect.top && 
           e.clientY <= rect.bottom;
         
-        if (isInServicesSection) {
+        if (isInFeaturesSection) {
           setMouseClicked(true);
-          setClickPos({ x: e.clientX, y: e.clientY });
+          setClickPos({ 
+            x: e.clientX, 
+            y: e.clientY 
+          });
+          
+          // Debug logging
+          console.log('Mouse clicked in features section', { x: e.clientX, y: e.clientY });
         }
       }
     };
@@ -79,7 +88,7 @@ const P5SocialIcons: React.FC = () => {
       )}
       <div 
         ref={canvasRef} 
-        className="absolute inset-0"
+        className="absolute inset-0" 
       />
     </div>
   );

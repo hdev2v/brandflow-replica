@@ -22,6 +22,7 @@ export const useP5SocialIconsSketch = ({
   const sketchRef = useRef<p5 | null>(null);
   const [loading, setLoading] = useState(true);
   const iconListRef = useRef<SocialIcon[]>([]);
+  const prevMouseClickedRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -48,7 +49,17 @@ export const useP5SocialIconsSketch = ({
         sketchRef.current.remove();
       }
     };
-  }, [containerRef]); // Only recreate on container change
+  }, [containerRef]); 
+
+  // Handle mouse click state changes
+  useEffect(() => {
+    if (mouseClicked && !prevMouseClickedRef.current) {
+      console.log('Mouse clicked detected in hook, position:', clickPos);
+      prevMouseClickedRef.current = true;
+    } else if (!mouseClicked && prevMouseClickedRef.current) {
+      prevMouseClickedRef.current = false;
+    }
+  }, [mouseClicked, clickPos]);
 
   return { loading };
 };
