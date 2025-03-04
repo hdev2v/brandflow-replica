@@ -2,7 +2,7 @@
 import p5 from 'p5';
 import { SocialIcon } from '@/types/socialIcons';
 import { initializeIcons, createIconsAtPosition } from './helpers/iconCreation';
-import { updateIconAnimation, cleanupIcons } from './helpers/iconAnimation';
+import { updateIconAnimation, cleanupIcons, checkCollisions } from './helpers/iconAnimation';
 import { renderIcon } from './helpers/iconRendering';
 import { preloadImages } from './helpers/imageLoader';
 
@@ -67,6 +67,9 @@ export const createSocialIconsSketch = ({
         // Reset mouse clicked state
         resetMouseClick();
       }
+      
+      // Check for collisions between icons
+      checkCollisions(p, icons);
       
       // Update and render each icon
       for (let i = 0; i < icons.length; i++) {

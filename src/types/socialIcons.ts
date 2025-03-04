@@ -19,4 +19,7 @@ export interface SocialIcon {
   image?: any; // Image object for the icon
   alpha?: number; // Alpha/opacity for drawing
   targetAlpha?: number; // Target alpha for animations
+  isColliding?: boolean; // Tracks if icon is currently colliding
+  collisionTimer?: number; // Timer for collision effect duration
+  originalColor?: string; // Original color to return to after collision
 }

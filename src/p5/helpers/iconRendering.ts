@@ -10,6 +10,26 @@ export const renderIcon = (
   loadedImages: Record<string, boolean>
 ): void => {
   const imageLoaded = logoImages[icon.platform] && loadedImages[icon.platform];
+  
+  // Add glow effect if icon is colliding
+  if (icon.isColliding) {
+    p.push();
+    p.noStroke();
+    
+    // Draw glow effect as a larger circle behind the icon
+    const glowColor = p.color(icon.color);
+    glowColor.setAlpha(100);
+    p.fill(glowColor);
+    
+    if (icon.rotation !== undefined) {
+      p.translate(icon.x, icon.y);
+      p.rotate(icon.rotation);
+      p.circle(0, 0, icon.size * 1.4);
+    } else {
+      p.circle(icon.x, icon.y, icon.size * 1.4);
+    }
+    p.pop();
+  }
 
   if (imageLoaded) {
     // Draw the actual logo image
