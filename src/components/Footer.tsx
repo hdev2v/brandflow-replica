@@ -6,16 +6,16 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-16 px-6 bg-primary text-primary-foreground">
+    <footer className="py-8 px-6 bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-12">
-          <div className="md:col-span-1">
-            <h3 className="text-2xl font-display font-bold mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div>
+            <h3 className="text-2xl font-display font-bold mb-4">
               Brand<span className="font-light">Flow</span>
             </h3>
-            <p className="text-primary-foreground/80 mb-6">
-              Creating exceptional digital experiences that elevate brands and connect with audiences.
-            </p>
+          </div>
+          
+          <div className="mt-6 md:mt-0">
             <div className="flex space-x-4">
               <a href="#" className="h-10 w-10 rounded-full border border-primary-foreground/30 flex items-center justify-center hover:bg-primary-foreground/10 transition-colors duration-300">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,132 +44,9 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          
-          <div>
-            <h4 className="text-lg font-medium mb-4">Navigation</h4>
-            <ul className="space-y-3">
-              <li>
-                <a 
-                  href="#home"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('home');
-                  }}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#features"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('features');
-                  }}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link"
-                >
-                  Features
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#partners"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('partners');
-                  }}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link"
-                >
-                  Partners
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#testimonials"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('testimonials');
-                  }}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link"
-                >
-                  Testimonials
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('contact');
-                  }}
-                  className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-lg font-medium mb-4">Services</h4>
-            <ul className="space-y-3">
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Brand Strategy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  UI/UX Design
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Development
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Content Strategy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Analytics
-                </a>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-lg font-medium mb-4">Legal</h4>
-            <ul className="space-y-3">
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Cookie Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200 animated-link">
-                  Accessibility
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
         
-        <div className="pt-8 border-t border-primary-foreground/20">
+        <div className="pt-6 mt-6 border-t border-primary-foreground/20">
           <p className="text-primary-foreground/60 text-center">
             © {currentYear} BrandFlow. All rights reserved.
           </p>
