@@ -6,6 +6,7 @@ import { createSocialIconsSketch } from '@/p5/createSocialIconsSketch';
 
 interface UseP5SocialIconsSketchProps {
   containerRef: React.RefObject<HTMLDivElement>;
+  mousePos?: { x: number, y: number };
   mouseClicked?: boolean;
   clickPos?: { x: number, y: number };
   resetMouseClick?: () => void;
@@ -13,6 +14,7 @@ interface UseP5SocialIconsSketchProps {
 
 export const useP5SocialIconsSketch = ({ 
   containerRef, 
+  mousePos = { x: 0, y: 0 }, 
   mouseClicked = false,
   clickPos = { x: 0, y: 0 },
   resetMouseClick = () => {}
@@ -20,7 +22,6 @@ export const useP5SocialIconsSketch = ({
   const sketchRef = useRef<p5 | null>(null);
   const [loading, setLoading] = useState(true);
   const iconListRef = useRef<SocialIcon[]>([]);
-  const prevMouseClickedRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -29,6 +30,7 @@ export const useP5SocialIconsSketch = ({
     const sketch = createSocialIconsSketch({
       containerRef,
       onLoadingChange: setLoading,
+      getMousePos: () => mousePos,
       getMouseClicked: () => mouseClicked,
       getClickPos: () => clickPos,
       resetMouseClick,
@@ -46,17 +48,7 @@ export const useP5SocialIconsSketch = ({
         sketchRef.current.remove();
       }
     };
-  }, [containerRef]); 
-
-  // Handle mouse click state changes
-  useEffect(() => {
-    if (mouseClicked && !prevMouseClickedRef.current) {
-      console.log('Mouse clicked detected in hook, position:', clickPos);
-      prevMouseClickedRef.current = true;
-    } else if (!mouseClicked && prevMouseClickedRef.current) {
-      prevMouseClickedRef.current = false;
-    }
-  }, [mouseClicked, clickPos]);
+  }, [containerRef]); // Only recreate on container change
 
   return { loading };
 };
