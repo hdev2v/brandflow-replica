@@ -28,7 +28,13 @@ const PartnersSection = () => {
         <div className="flex flex-col items-center text-center mb-16">
           {/* Quote Section */}
           <div className="max-w-3xl mx-auto mb-16">
-            <div className="text-primary text-6xl font-serif mb-6 fade-in-element">"</div>
+            <div className="mb-6 fade-in-element">
+              <img 
+                src="/lovable-uploads/003ca0f3-7a6c-4b5b-a96a-10a85323ee57.png" 
+                alt="Quotation mark" 
+                className="h-16 mx-auto"
+              />
+            </div>
             <h2 className="text-3xl md:text-4xl font-display mb-8 leading-relaxed text-gray-800 fade-in-element">
               ...Vi uppskattar att du tog dig tid att förstå vårt varumärke...
             </h2>

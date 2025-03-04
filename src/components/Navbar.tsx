@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { scrollToSection } from '@/lib/animation';
 import Button from './Button';
@@ -42,7 +43,7 @@ const Navbar = () => {
   
   const navItems = [
     { name: 'Home', id: 'home' },
-    { name: 'Features', id: 'features' },
+    { name: 'Tjänster', id: 'features' },
     { name: 'Partners', id: 'partners' },
     { name: 'Testimonials', id: 'testimonials' },
     { name: 'Contact', id: 'contact' }
