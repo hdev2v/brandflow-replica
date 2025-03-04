@@ -1,6 +1,6 @@
-
-// Export all helpers from a single entry point
-export { initializeIcons } from './initializeIcons';
-export { applyMouseRepulsion, applyCardTargeting, createIconsAtPosition } from './mouseInteractions';
-export { updateIconPosition } from './iconPhysics';
-export { drawIcon } from './renderIcons';
+import p5 from 'p5';
+import { SocialIcon } from '@/types/socialIcons';
+import { initializeIcons } from './initializeIcons';
+import { applyMouseRepulsion, applyCardTargeting, createIconsAtPosition } from './mouseInteractions';
+import { updateIconPosition } from './iconPhysics';
+import { drawIcon } from './renderIcons';

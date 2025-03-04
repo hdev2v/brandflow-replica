@@ -2,36 +2,41 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useP5SocialIconsSketch } from '@/hooks/useP5SocialIconsSketch';
 
-interface ServiceCardRect {
-  id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 const P5SocialIcons: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
-  const [hoveredCard, setHoveredCard] = useState<ServiceCardRect | null>(null);
-  const [serviceCards, setServiceCards] = useState<ServiceCardRect[]>([]);
   const [mouseClicked, setMouseClicked] = useState<boolean>(false);
   const [clickPos, setClickPos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+  const [isInSection, setIsInSection] = useState<boolean>(false);
   
   const { loading } = useP5SocialIconsSketch({ 
     containerRef: canvasRef,
     mousePos,
-    hoveredCard,
-    serviceCards,
     mouseClicked,
     clickPos,
     resetMouseClick: () => setMouseClicked(false)
   });
 
-  // Track mouse position
+  // Track mouse position only when in the services section
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      // Check if within services section
+      const servicesSection = document.getElementById('features');
+      if (servicesSection) {
+        const rect = servicesSection.getBoundingClientRect();
+        const isInServicesSection = 
+          e.clientX >= rect.left && 
+          e.clientX <= rect.right && 
+          e.clientY >= rect.top && 
+          e.clientY <= rect.bottom;
+        
+        if (isInServicesSection) {
+          setMousePos({ x: e.clientX, y: e.clientY });
+          setIsInSection(true);
+        } else {
+          setIsInSection(false);
+        }
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -40,11 +45,23 @@ const P5SocialIcons: React.FC = () => {
     };
   }, []);
 
-  // Handle mouse clicks
+  // Handle mouse clicks only when in services section
   useEffect(() => {
     const handleMouseClick = (e: MouseEvent) => {
-      setMouseClicked(true);
-      setClickPos({ x: e.clientX, y: e.clientY });
+      const servicesSection = document.getElementById('features');
+      if (servicesSection) {
+        const rect = servicesSection.getBoundingClientRect();
+        const isInServicesSection = 
+          e.clientX >= rect.left && 
+          e.clientX <= rect.right && 
+          e.clientY >= rect.top && 
+          e.clientY <= rect.bottom;
+        
+        if (isInServicesSection) {
+          setMouseClicked(true);
+          setClickPos({ x: e.clientX, y: e.clientY });
+        }
+      }
     };
 
     window.addEventListener('click', handleMouseClick);
@@ -52,55 +69,6 @@ const P5SocialIcons: React.FC = () => {
       window.removeEventListener('click', handleMouseClick);
     };
   }, []);
-
-  // Find and track service cards
-  useEffect(() => {
-    const updateServiceCards = () => {
-      const cards = Array.from(document.querySelectorAll('.glass-card')).map((card, id) => {
-        const rect = card.getBoundingClientRect();
-        return {
-          id,
-          x: rect.left,
-          y: rect.top,
-          width: rect.width,
-          height: rect.height
-        };
-      });
-      setServiceCards(cards);
-    };
-
-    // Initial detection
-    updateServiceCards();
-
-    // Update on resize
-    window.addEventListener('resize', updateServiceCards);
-    
-    // Return cleanup function
-    return () => {
-      window.removeEventListener('resize', updateServiceCards);
-    };
-  }, []);
-
-  // Separate effect for hover detection using the current serviceCards state
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const hovered = serviceCards.find(card => 
-        clientX >= card.x && 
-        clientX <= card.x + card.width && 
-        clientY >= card.y && 
-        clientY <= card.y + card.height
-      );
-      
-      setHoveredCard(hovered || null);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [serviceCards]);
 
   return (
     <div className="relative w-full h-full">
