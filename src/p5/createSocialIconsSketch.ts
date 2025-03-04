@@ -7,7 +7,6 @@ import { SKETCH_CONFIG } from './socialIconsSketchConfig';
 interface SketchProps {
   containerRef: React.RefObject<HTMLDivElement>;
   onLoadingChange: (loading: boolean) => void;
-  getMousePos: () => { x: number, y: number };
   getMouseClicked: () => boolean;
   getClickPos: () => { x: number, y: number };
   resetMouseClick: () => void;
@@ -17,7 +16,6 @@ interface SketchProps {
 export const createSocialIconsSketch = ({
   containerRef,
   onLoadingChange,
-  getMousePos,
   getMouseClicked,
   getClickPos,
   resetMouseClick,
@@ -119,21 +117,16 @@ export const createSocialIconsSketch = ({
     p.draw = () => {
       p.clear();
       
-      // Get current state from props
-      const mousePos = getMousePos();
+      // Get mouse click state
       const mouseClicked = getMouseClicked();
       const clickPos = getClickPos();
-      
-      // Get mouse position relative to canvas
-      const canvasRect = containerRef.current?.getBoundingClientRect();
-      if (!canvasRect) return;
-      
-      const mouseX = mousePos.x - canvasRect.left;
-      const mouseY = mousePos.y - canvasRect.top;
       
       // Handle mouse clicks - create new icons
       if (mouseClicked && !prevMouseClicked) {
         prevMouseClicked = true;
+        
+        const canvasRect = containerRef.current?.getBoundingClientRect();
+        if (!canvasRect) return;
         
         const canvasClickX = clickPos.x - canvasRect.left;
         const canvasClickY = clickPos.y - canvasRect.top;
@@ -160,15 +153,15 @@ export const createSocialIconsSketch = ({
       for (let i = icons.length - 1; i >= 0; i--) {
         const icon = icons[i];
         
-        // Apply mouse repulsion
-        const d = p.dist(icon.x, icon.y, mouseX, mouseY);
-        
-        // Apply repulsion if mouse is close enough
-        if (d < SKETCH_CONFIG.MOUSE_REPEL_RADIUS) {
-          const angle = p.atan2(icon.y - mouseY, icon.x - mouseX);
-          const force = p.map(d, 0, SKETCH_CONFIG.MOUSE_REPEL_RADIUS, SKETCH_CONFIG.MOUSE_REPEL_STRENGTH, 0);
-          icon.vx += p.cos(angle) * force;
-          icon.vy += p.sin(angle) * force;
+        // Apply autonomous movement if enabled
+        if (SKETCH_CONFIG.AUTONOMOUS_MOVEMENT) {
+          // Randomly change direction occasionally
+          if (p.random() < SKETCH_CONFIG.CHANGE_DIRECTION_CHANCE) {
+            const angle = p.random(0, p.TWO_PI);
+            const force = p.random(0.05, 0.2);
+            icon.vx += p.cos(angle) * force;
+            icon.vy += p.sin(angle) * force;
+          }
         }
         
         // Update velocity with friction
@@ -180,6 +173,13 @@ export const createSocialIconsSketch = ({
         if (speed > SKETCH_CONFIG.MAX_SPEED) {
           icon.vx = (icon.vx / speed) * SKETCH_CONFIG.MAX_SPEED;
           icon.vy = (icon.vy / speed) * SKETCH_CONFIG.MAX_SPEED;
+        }
+        
+        // Add a small amount of velocity if icon is moving too slow
+        if (speed < 0.2) {
+          const angle = p.random(0, p.TWO_PI);
+          icon.vx += p.cos(angle) * 0.1;
+          icon.vy += p.sin(angle) * 0.1;
         }
         
         // Update position
