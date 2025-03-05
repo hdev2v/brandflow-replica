@@ -98,8 +98,8 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Collage image positioned in front of the main portrait - HIDDEN ON MOBILE */}
-              <div className="hidden lg:block absolute right-0 top-0 w-[45%] h-[40%] z-20 transform translate-x-6 -translate-y-6">
+              {/* Collage image positioned in front of the main portrait - HIDDEN ON MOBILE, MADE WIDER AND REPOSITIONED */}
+              <div className="hidden lg:block absolute right-0 top-0 w-[55%] h-[40%] z-20 transform translate-x-4 -translate-y-8">
                 <div className="rounded-xl overflow-hidden shadow-lg h-full">
                   <img 
                     src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
