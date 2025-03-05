@@ -68,6 +68,17 @@ const HeroSection = () => {
           
           <div className="order-1 lg:order-2 relative mb-8 lg:mb-0">
             <div className="relative h-[540px] w-full">
+              {/* Collage image positioned behind the main portrait */}
+              <div className="absolute right-0 top-0 w-[45%] h-[40%] z-10 transform translate-x-6 -translate-y-6">
+                <div className="rounded-xl overflow-hidden shadow-lg h-full">
+                  <img 
+                    src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
+                    alt="Services Collage" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </div>
+              
               {/* Single main portrait image */}
               <div className="absolute left-1/2 transform -translate-x-1/2 w-[90%] md:w-[85%] h-full z-20">
                 <div className="rounded-3xl overflow-hidden shadow-2xl h-full">
