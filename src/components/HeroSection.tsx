@@ -66,7 +66,7 @@ const HeroSection = () => {
             </div>
             
             {/* Mobile-only smaller images that appear below text */}
-            <div className="flex flex-col gap-6 mt-10 lg:hidden">
+            <div className="flex flex-col gap-6 mt-10 lg:hidden mx-auto max-w-md">
               <div className="w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-lg">
                 <img 
                   src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
