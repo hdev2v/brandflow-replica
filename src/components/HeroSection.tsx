@@ -66,8 +66,8 @@ const HeroSection = () => {
             </div>
             
             {/* Mobile-only smaller images that appear below text */}
-            <div className="flex flex-col gap-4 mt-8 lg:hidden">
-              <div className="w-full h-[160px] rounded-xl overflow-hidden shadow-lg">
+            <div className="flex flex-col gap-6 mt-10 lg:hidden">
+              <div className="w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-lg">
                 <img 
                   src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
                   alt="Services Collage" 
@@ -75,7 +75,7 @@ const HeroSection = () => {
                 />
               </div>
               
-              <div className="w-full h-[160px] rounded-xl overflow-hidden shadow-lg">
+              <div className="w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-lg">
                 <img 
                   src="/lovable-uploads/5489e3ba-6f97-4712-9cc6-b0075c0b0340.png"
                   alt="Social Media Performance" 
