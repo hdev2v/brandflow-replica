@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Button from './Button';
+
 const HeroSection = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -19,6 +20,7 @@ const HeroSection = () => {
     animateElement(descriptionRef.current, 300);
     animateElement(ctaRef.current, 400);
   }, []);
+
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -27,6 +29,7 @@ const HeroSection = () => {
       });
     }
   };
+
   return <section id="home" className="viewport-section pt-20 md:pt-32 pb-24 px-4 md:px-6 bg-black text-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -67,9 +70,9 @@ const HeroSection = () => {
               </div>
               
               {/* Single main portrait image */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-[90%] md:w-[85%] h-full z-20">
+              <div className="absolute left-1/2 transform -translate-x-[55%] w-[90%] md:w-[85%] h-full z-20">
                 <div className="rounded-3xl overflow-hidden shadow-2xl h-full">
-                  <img src="/lovable-uploads/c660c0d9-e040-49d3-82fa-3d876387af15.png" alt="Nadia - Social Media Expert" className="w-full h-full object-center object-contain" />
+                  <img src="/lovable-uploads/c660c0d9-e040-49d3-82fa-3d876387af15.png" alt="Nadia - Social Media Expert" className="w-full h-full object-cover object-center rounded-3xl" />
                 </div>
               </div>
               
@@ -81,4 +84,5 @@ const HeroSection = () => {
       </div>
     </section>;
 };
+
 export default HeroSection;
