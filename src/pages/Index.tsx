@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
-import ProcessSection from '@/components/ProcessSection';
+import PartnersSection from '@/components/PartnersSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
+import CallToActionSection from '@/components/CallToActionSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import { setupAnimations } from '@/lib/animation';
@@ -34,8 +35,9 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <FeaturesSection />
-      <ProcessSection />
+      <PartnersSection />
       <TestimonialsSection />
+      <CallToActionSection />
       <ContactSection />
       <Footer />
     </div>

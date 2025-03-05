@@ -4,19 +4,8 @@ import p5 from 'p5';
 import { SocialIcon } from '@/types/socialIcons';
 import { createSocialIconsSketch } from '@/p5/createSocialIconsSketch';
 
-interface ServiceCardRect {
-  id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 interface UseP5SocialIconsSketchProps {
   containerRef: React.RefObject<HTMLDivElement>;
-  mousePos?: { x: number, y: number };
-  hoveredCard?: ServiceCardRect | null;
-  serviceCards?: ServiceCardRect[];
   mouseClicked?: boolean;
   clickPos?: { x: number, y: number };
   resetMouseClick?: () => void;
@@ -24,9 +13,6 @@ interface UseP5SocialIconsSketchProps {
 
 export const useP5SocialIconsSketch = ({ 
   containerRef, 
-  mousePos = { x: 0, y: 0 }, 
-  hoveredCard = null,
-  serviceCards = [],
   mouseClicked = false,
   clickPos = { x: 0, y: 0 },
   resetMouseClick = () => {}
@@ -42,9 +28,6 @@ export const useP5SocialIconsSketch = ({
     const sketch = createSocialIconsSketch({
       containerRef,
       onLoadingChange: setLoading,
-      getMousePos: () => mousePos,
-      getHoveredCard: () => hoveredCard,
-      getServiceCards: () => serviceCards,
       getMouseClicked: () => mouseClicked,
       getClickPos: () => clickPos,
       resetMouseClick,
@@ -63,6 +46,13 @@ export const useP5SocialIconsSketch = ({
       }
     };
   }, [containerRef]); // Only recreate on container change
+
+  // Update the sketch when mouse click state changes
+  useEffect(() => {
+    if (mouseClicked && sketchRef.current) {
+      // This will be handled in the p5 sketch's draw function
+    }
+  }, [mouseClicked, clickPos]);
 
   return { loading };
 };

@@ -2,105 +2,37 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useP5SocialIconsSketch } from '@/hooks/useP5SocialIconsSketch';
 
-interface ServiceCardRect {
-  id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 const P5SocialIcons: React.FC = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
-  const [hoveredCard, setHoveredCard] = useState<ServiceCardRect | null>(null);
-  const [serviceCards, setServiceCards] = useState<ServiceCardRect[]>([]);
   const [mouseClicked, setMouseClicked] = useState<boolean>(false);
   const [clickPos, setClickPos] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
   
   const { loading } = useP5SocialIconsSketch({ 
     containerRef: canvasRef,
-    mousePos,
-    hoveredCard,
-    serviceCards,
     mouseClicked,
     clickPos,
     resetMouseClick: () => setMouseClicked(false)
   });
 
-  // Track mouse position
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  // Handle mouse clicks
-  useEffect(() => {
-    const handleMouseClick = (e: MouseEvent) => {
+  // Handle mouse clicks within the canvas
+  const handleCanvasClick = (e: React.MouseEvent) => {
+    console.log("Canvas clicked at:", e.clientX, e.clientY);
+    if (canvasRef.current) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const clickPosition = { 
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+      console.log("Setting click position:", clickPosition);
+      setClickPos(clickPosition);
       setMouseClicked(true);
-      setClickPos({ x: e.clientX, y: e.clientY });
-    };
+    }
+  };
 
-    window.addEventListener('click', handleMouseClick);
-    return () => {
-      window.removeEventListener('click', handleMouseClick);
-    };
-  }, []);
-
-  // Find and track service cards
+  // Log when the component mounts to ensure it's working
   useEffect(() => {
-    const updateServiceCards = () => {
-      const cards = Array.from(document.querySelectorAll('.glass-card')).map((card, id) => {
-        const rect = card.getBoundingClientRect();
-        return {
-          id,
-          x: rect.left,
-          y: rect.top,
-          width: rect.width,
-          height: rect.height
-        };
-      });
-      setServiceCards(cards);
-    };
-
-    // Initial detection
-    updateServiceCards();
-
-    // Update on resize
-    window.addEventListener('resize', updateServiceCards);
-    
-    // Return cleanup function
-    return () => {
-      window.removeEventListener('resize', updateServiceCards);
-    };
+    console.log("P5SocialIcons component mounted");
   }, []);
-
-  // Separate effect for hover detection using the current serviceCards state
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const hovered = serviceCards.find(card => 
-        clientX >= card.x && 
-        clientX <= card.x + card.width && 
-        clientY >= card.y && 
-        clientY <= card.y + card.height
-      );
-      
-      setHoveredCard(hovered || null);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, [serviceCards]);
 
   return (
     <div className="relative w-full h-full">
@@ -111,7 +43,9 @@ const P5SocialIcons: React.FC = () => {
       )}
       <div 
         ref={canvasRef} 
-        className="absolute inset-0"
+        className="absolute inset-0 cursor-pointer" 
+        onClick={handleCanvasClick}
+        style={{ zIndex: 10 }}
       />
     </div>
   );

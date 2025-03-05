@@ -22,7 +22,7 @@ const Navbar = () => {
       }
       
       // Update active section based on scroll position
-      const sections = ['home', 'features', 'process', 'testimonials', 'contact'];
+      const sections = ['home', 'features', 'partners', 'testimonials', 'contact'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -43,10 +43,10 @@ const Navbar = () => {
   
   const navItems = [
     { name: 'Home', id: 'home' },
-    { name: 'Features', id: 'features' },
-    { name: 'Process', id: 'process' },
-    { name: 'Testimonials', id: 'testimonials' },
-    { name: 'Contact', id: 'contact' }
+    { name: 'Tjänster', id: 'features' },
+    { name: 'Partners', id: 'partners' },
+    { name: 'Recensioner', id: 'testimonials' },
+    { name: 'Kontakt', id: 'contact' }
   ];
 
   return (
@@ -62,7 +62,7 @@ const Navbar = () => {
         <div className="flex items-center">
           <a href="#home" className={cn(
             "text-2xl font-display font-bold tracking-tight",
-            !isScrolled && "text-white"
+            isScrolled ? "text-primary" : "text-white"
           )}>
             Brand<span className="font-light">Flow</span>
           </a>
@@ -91,10 +91,15 @@ const Navbar = () => {
         </nav>
         
         <div className="hidden md:block">
-          <Button variant="primary" size="md" className={cn(
-            !isScrolled && "bg-white text-primary hover:bg-white/90"
-          )}>
-            Get Started
+          <Button 
+            variant="primary" 
+            size="md" 
+            className={cn(
+              !isScrolled && "bg-white text-primary hover:bg-white/90"
+            )}
+            onClick={() => scrollToSection('features')}
+          >
+            Kom igång
           </Button>
         </div>
         
@@ -158,8 +163,16 @@ const Navbar = () => {
               {item.name}
             </a>
           ))}
-          <Button variant="primary" size="md" className="mt-2 w-full">
-            Get Started
+          <Button 
+            variant="primary" 
+            size="md" 
+            className="mt-2 w-full"
+            onClick={() => {
+              scrollToSection('features');
+              setIsMenuOpen(false);
+            }}
+          >
+            Kom igång
           </Button>
         </nav>
       </div>

@@ -1,7 +1,11 @@
+
 import React, { useState } from 'react';
 import Button from './Button';
+import { useToast } from "@/hooks/use-toast";
+import { AlertTriangle } from "lucide-react";
 
 const ContactSection = () => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,34 +31,11 @@ const ContactSection = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simple validation
-    if (!formData.name || !formData.email || !formData.message) {
-      setFormStatus({
-        type: 'error',
-        message: 'Vänligen fyll i alla fält'
-      });
-      return;
-    }
-    
-    // Simulating form submission
-    setTimeout(() => {
-      setFormStatus({
-        type: 'success',
-        message: 'Tack för ditt meddelande. Vi återkommer snart!'
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
-      
-      // Clear status after 5 seconds
-      setTimeout(() => {
-        setFormStatus({ type: null, message: '' });
-      }, 5000);
-    }, 1000);
+    toast({
+      title: "Funktionen är inte tillgänglig",
+      description: "Kontaktformuläret är inte implementerat ännu. Vänligen använd e-postadressen till vänster istället.",
+      variant: "destructive",
+    });
   };
 
   return (
@@ -77,7 +58,12 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-medium">Maila mig på</h4>
-                  <p className="text-gray-400">nadia@nadianasser.com</p>
+                  <a 
+                    href="mailto:nadia@nadianasser.com" 
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    nadia@nadianasser.com
+                  </a>
                 </div>
               </div>
               
@@ -110,6 +96,16 @@ const ContactSection = () => {
           
           <div className="scale-in-element">
             <div className="p-8 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
+              <div className="mb-6 p-4 rounded-md bg-amber-900/30 border border-amber-500/30 text-amber-200">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-medium mb-1">Kontaktformuläret är inte aktivt ännu</h4>
+                    <p className="text-sm">Denna funktion är under utveckling. Vänligen använd e-postadressen till vänster för att kontakta mig tills vidare.</p>
+                  </div>
+                </div>
+              </div>
+              
               <form onSubmit={handleSubmit}>
                 <div className="space-y-6">
                   <div>

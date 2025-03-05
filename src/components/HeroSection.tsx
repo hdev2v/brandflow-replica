@@ -64,49 +64,64 @@ const HeroSection = () => {
                 Boka gratis konsultation
               </Button>
             </div>
+            
+            {/* Mobile-only smaller images that appear below text */}
+            <div className="flex flex-col gap-6 mt-10 lg:hidden mx-auto max-w-md">
+              <div className="w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-lg">
+                <img 
+                  src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
+                  alt="Services Collage" 
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              
+              <div className="w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden shadow-lg">
+                <img 
+                  src="/lovable-uploads/5489e3ba-6f97-4712-9cc6-b0075c0b0340.png"
+                  alt="Social Media Performance" 
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
           </div>
           
           <div className="order-1 lg:order-2 relative mb-8 lg:mb-0">
-            {/* Refined image composition with smaller main image and better balance */}
             <div className="relative h-[540px] w-full">
-              {/* Main portrait - reduced in size but still the focal point */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-[75%] md:w-[70%] lg:w-[75%] z-20 transition-all duration-700 hover:scale-[1.02]">
-                <div className="rounded-3xl overflow-hidden shadow-2xl">
+              {/* Main portrait image - positioned behind the smaller images - MOVED LEFT */}
+              <div className="absolute left-[40%] transform -translate-x-1/2 w-[80%] md:w-[75%] h-full z-10">
+                <div className="rounded-3xl overflow-hidden shadow-2xl h-full">
                   <img 
-                    src="/lovable-uploads/27bac0b0-9f6d-4194-8e1b-57dd4880699c.png"
+                    src="/lovable-uploads/c660c0d9-e040-49d3-82fa-3d876387af15.png"
                     alt="Nadia - Social Media Expert" 
-                    className="w-full h-auto object-cover"
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </div>
+              
+              {/* Collage image positioned in front of the main portrait - HIDDEN ON MOBILE, MADE WIDER AND REPOSITIONED */}
+              <div className="hidden lg:block absolute right-0 top-0 w-[55%] h-[40%] z-20 transform translate-x-4 -translate-y-8">
+                <div className="rounded-xl overflow-hidden shadow-lg h-full">
+                  <img 
+                    src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
+                    alt="Services Collage" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </div>
+              
+              {/* Social media screenshot positioned in front of the main portrait - MOVED RIGHT AND LOWER */}
+              <div className="hidden lg:block absolute right-0 bottom-0 w-[45%] h-[40%] z-20 transform translate-x-8 translate-y-10">
+                <div className="rounded-xl overflow-hidden shadow-lg h-full">
+                  <img 
+                    src="/lovable-uploads/5489e3ba-6f97-4712-9cc6-b0075c0b0340.png"
+                    alt="Social Media Performance" 
+                    className="w-full h-full object-cover object-center"
                   />
                 </div>
               </div>
               
               {/* Subtle background gradient for depth */}
-              <div className="absolute left-1/2 bottom-8 transform -translate-x-1/2 w-[85%] h-[70%] rounded-[40px] bg-gradient-to-t from-pink-500/10 to-transparent blur-xl z-10"></div>
-              
-              {/* Social Media Gallery - repositioned for better integration */}
-              <div className="absolute top-4 right-0 md:right-2 w-[60%] md:w-[55%] lg:w-[58%] z-30 transition-all duration-500 hover:translate-y-1 hover:rotate-1">
-                <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-800">
-                  <img 
-                    src="/lovable-uploads/fd2432ff-85d3-4bbe-9360-481a252360fa.png" 
-                    alt="Social Media Gallery" 
-                    className="w-full h-auto" 
-                  />
-                </div>
-              </div>
-              
-              {/* Instagram Stats - repositioned for better integration and visibility */}
-              <div className="absolute right-4 bottom-[25%] w-[48%] md:w-[42%] lg:w-[45%] z-40 transition-all duration-500 hover:-translate-y-1 hover:-rotate-1">
-                <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-800">
-                  <img 
-                    src="/lovable-uploads/ffad4bf2-ff2e-4fd9-bda9-f567e36c7250.png" 
-                    alt="Instagram Stats" 
-                    className="w-full h-auto"
-                  />
-                </div>
-              </div>
-              
-              {/* Decorative element for added visual interest */}
-              <div className="absolute left-[5%] top-[20%] w-[25%] h-[25%] rounded-full bg-gradient-to-tr from-pink-500/20 to-purple-500/10 blur-2xl z-5"></div>
+              <div className="absolute left-1/2 bottom-8 transform -translate-x-1/2 w-[95%] h-[80%] rounded-[40px] bg-gradient-to-t from-pink-500/10 to-transparent blur-xl z-10"></div>
             </div>
           </div>
         </div>

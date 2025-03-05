@@ -1,13 +1,16 @@
 
 // Configuration for the p5 social icons sketch
 export const SKETCH_CONFIG = {
-  NUM_ICONS: 20,
-  MOUSE_REPEL_RADIUS: 100,
-  MOUSE_REPEL_STRENGTH: 2,
-  GATHER_STRENGTH: 0.05,
-  RETURN_STRENGTH: 0.02,
-  MAX_SPEED: 3,
-  FRICTION: 0.95,
+  NUM_ICONS: 15,
+  MAX_SPEED: 1.5,
+  FRICTION: 0.98,
   ICON_MIN_SIZE: 30,
-  ICON_MAX_SIZE: 60
+  ICON_MAX_SIZE: 60,
+  // New configuration for autonomous movement
+  DIRECTION_CHANGE_CHANCE: 0.02, // Probability of changing direction each frame
+  MIN_VELOCITY: 0.5,             // Minimum velocity
+  MAX_VELOCITY: 1.2,             // Maximum velocity
+  // Configuration for click interactions
+  CLICK_BURST_COUNT: 8,          // Increased number of icons created on click
+  CLICK_BURST_SPEED: 4.5         // Increased initial speed of icons created on click
 };
