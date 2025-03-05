@@ -5,6 +5,7 @@ import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import PartnersSection from '@/components/PartnersSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
+import CallToActionSection from '@/components/CallToActionSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import { setupAnimations } from '@/lib/animation';
@@ -36,6 +37,7 @@ const Index = () => {
       <FeaturesSection />
       <PartnersSection />
       <TestimonialsSection />
+      <CallToActionSection />
       <ContactSection />
       <Footer />
     </div>
