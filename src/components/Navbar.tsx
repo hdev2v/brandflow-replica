@@ -62,7 +62,7 @@ const Navbar = () => {
         <div className="flex items-center">
           <a href="#home" className={cn(
             "text-2xl font-display font-bold tracking-tight",
-            !isScrolled && "text-white"
+            isScrolled ? "text-primary" : "text-white"
           )}>
             Brand<span className="font-light">Flow</span>
           </a>
