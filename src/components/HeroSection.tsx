@@ -87,8 +87,8 @@ const HeroSection = () => {
           
           <div className="order-1 lg:order-2 relative mb-8 lg:mb-0">
             <div className="relative h-[540px] w-full">
-              {/* Main portrait image - positioned behind the smaller images */}
-              <div className="absolute left-[45%] transform -translate-x-1/2 w-[80%] md:w-[75%] h-full z-10">
+              {/* Main portrait image - positioned behind the smaller images - MOVED LEFT */}
+              <div className="absolute left-[40%] transform -translate-x-1/2 w-[80%] md:w-[75%] h-full z-10">
                 <div className="rounded-3xl overflow-hidden shadow-2xl h-full">
                   <img 
                     src="/lovable-uploads/c660c0d9-e040-49d3-82fa-3d876387af15.png"
@@ -109,8 +109,8 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Social media screenshot positioned in front of the main portrait - HIDDEN ON MOBILE */}
-              <div className="hidden lg:block absolute right-0 bottom-0 w-[45%] h-[40%] z-20 transform translate-x-6 translate-y-6">
+              {/* Social media screenshot positioned in front of the main portrait - MOVED RIGHT AND LOWER */}
+              <div className="hidden lg:block absolute right-0 bottom-0 w-[45%] h-[40%] z-20 transform translate-x-8 translate-y-10">
                 <div className="rounded-xl overflow-hidden shadow-lg h-full">
                   <img 
                     src="/lovable-uploads/5489e3ba-6f97-4712-9cc6-b0075c0b0340.png"
