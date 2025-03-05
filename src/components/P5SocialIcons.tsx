@@ -1,5 +1,5 @@
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useP5SocialIconsSketch } from '@/hooks/useP5SocialIconsSketch';
 
 const P5SocialIcons: React.FC = () => {
@@ -16,15 +16,23 @@ const P5SocialIcons: React.FC = () => {
 
   // Handle mouse clicks within the canvas
   const handleCanvasClick = (e: React.MouseEvent) => {
+    console.log("Canvas clicked at:", e.clientX, e.clientY);
     if (canvasRef.current) {
       const rect = canvasRef.current.getBoundingClientRect();
-      setClickPos({ 
+      const clickPosition = { 
         x: e.clientX - rect.left,
         y: e.clientY - rect.top
-      });
+      };
+      console.log("Setting click position:", clickPosition);
+      setClickPos(clickPosition);
       setMouseClicked(true);
     }
   };
+
+  // Log when the component mounts to ensure it's working
+  useEffect(() => {
+    console.log("P5SocialIcons component mounted");
+  }, []);
 
   return (
     <div className="relative w-full h-full">
@@ -35,9 +43,9 @@ const P5SocialIcons: React.FC = () => {
       )}
       <div 
         ref={canvasRef} 
-        className="absolute inset-0"
+        className="absolute inset-0 cursor-pointer" 
         onClick={handleCanvasClick}
-        style={{ cursor: 'pointer' }}
+        style={{ zIndex: 10 }}
       />
     </div>
   );

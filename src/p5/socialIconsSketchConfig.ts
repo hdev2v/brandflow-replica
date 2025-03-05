@@ -11,6 +11,6 @@ export const SKETCH_CONFIG = {
   MIN_VELOCITY: 0.5,             // Minimum velocity
   MAX_VELOCITY: 1.2,             // Maximum velocity
   // Configuration for click interactions
-  CLICK_BURST_COUNT: 6,          // Number of icons created on click
-  CLICK_BURST_SPEED: 3.5         // Initial speed of icons created on click
+  CLICK_BURST_COUNT: 8,          // Increased number of icons created on click
+  CLICK_BURST_SPEED: 4.5         // Increased initial speed of icons created on click
 };

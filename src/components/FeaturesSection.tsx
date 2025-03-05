@@ -1,24 +1,28 @@
-
 import React from 'react';
 import P5SocialIcons from './P5SocialIcons';
+
 interface FeatureCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
 }
+
 const FeatureCard = ({
   title,
   description,
   icon
 }: FeatureCardProps) => {
-  return <div className="glass-card p-6 fade-in-element flex flex-col items-center text-center h-full">
+  return (
+    <div className="glass-card p-6 fade-in-element flex flex-col items-center text-center h-full">
       <div className="h-12 w-12 flex items-center justify-center rounded-full bg-primary/20 mb-4">
         {icon}
       </div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-muted-foreground text-sm">{description}</p>
-    </div>;
+    </div>
+  );
 };
+
 const FeaturesSection = () => {
   const features = [{
     title: "Art Director",
@@ -61,8 +65,9 @@ const FeaturesSection = () => {
           </svg>
   }];
   
-  return <section id="features" className="viewport-section py-24 px-6 bg-secondary/30 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto relative z-10">
+  return (
+    <section id="features" className="viewport-section py-24 px-6 bg-secondary/30 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto relative z-20">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 reveal-right" id="services-title">Våra tjänster</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto reveal-left">En kanal räcker inte längre. Man måste skapa sig en helhetsbild som man kan följa genom alla kanaler. Jag hjälper dig att nå dina kunder på rätt sätt, med rätt budskap och möta dina förväntningar.</p>
@@ -81,15 +86,16 @@ const FeaturesSection = () => {
         </div>
       </div>
       
-      {/* P5.js Social Icons Animation with better positioning */}
-      <div className="absolute inset-0 w-full h-full">
+      {/* P5.js Social Icons Animation with improved positioning and z-index */}
+      <div className="absolute inset-0 w-full h-full z-10">
         <P5SocialIcons />
       </div>
       
       {/* Background decoration */}
       <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
       <div className="absolute -top-20 -left-20 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"></div>
-    </section>;
+    </section>
+  );
 };
 
 export default FeaturesSection;
