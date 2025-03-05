@@ -45,8 +45,8 @@ const Navbar = () => {
     { name: 'Home', id: 'home' },
     { name: 'Tjänster', id: 'features' },
     { name: 'Partners', id: 'partners' },
-    { name: 'Testimonials', id: 'testimonials' },
-    { name: 'Contact', id: 'contact' }
+    { name: 'Recensioner', id: 'testimonials' },
+    { name: 'Kontakt', id: 'contact' }
   ];
 
   return (
@@ -91,10 +91,15 @@ const Navbar = () => {
         </nav>
         
         <div className="hidden md:block">
-          <Button variant="primary" size="md" className={cn(
-            !isScrolled && "bg-white text-primary hover:bg-white/90"
-          )}>
-            Get Started
+          <Button 
+            variant="primary" 
+            size="md" 
+            className={cn(
+              !isScrolled && "bg-white text-primary hover:bg-white/90"
+            )}
+            onClick={() => scrollToSection('features')}
+          >
+            Kom igång
           </Button>
         </div>
         
@@ -158,8 +163,16 @@ const Navbar = () => {
               {item.name}
             </a>
           ))}
-          <Button variant="primary" size="md" className="mt-2 w-full">
-            Get Started
+          <Button 
+            variant="primary" 
+            size="md" 
+            className="mt-2 w-full"
+            onClick={() => {
+              scrollToSection('features');
+              setIsMenuOpen(false);
+            }}
+          >
+            Kom igång
           </Button>
         </nav>
       </div>

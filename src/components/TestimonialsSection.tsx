@@ -43,23 +43,23 @@ const TestimonialsSection = () => {
   
   const testimonials = [
     {
-      content: "Working with BrandFlow transformed our digital presence. Their strategic approach and attention to detail resulted in a website that not only looks stunning but also drives real business results.",
+      content: "Att arbeta med BrandFlow förändrade vår digitala närvaro. Deras strategiska tillvägagångssätt och uppmärksamhet på detaljer resulterade i en webbplats som inte bara ser fantastisk ut utan också ger verkliga affärsresultat.",
       author: "Sarah Johnson",
-      position: "Marketing Director",
+      position: "Marknadsdirektör",
       company: "Innovate Tech",
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=150&h=150&q=80"
     },
     {
-      content: "The team at BrandFlow truly understands how to translate business objectives into beautiful, functional design. They were collaborative, responsive, and delivered beyond our expectations.",
+      content: "Teamet på BrandFlow förstår verkligen hur man översätter affärsmål till vacker, funktionell design. De var samarbetsvilliga, lyhörda och levererade utöver våra förväntningar.",
       author: "Michael Chen",
-      position: "CEO",
+      position: "VD",
       company: "Nexus Solutions",
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80"
     },
     {
-      content: "BrandFlow's process is thorough and thoughtful. They took the time to understand our brand and created a digital experience that perfectly represents who we are and resonates with our audience.",
+      content: "BrandFlows process är grundlig och genomtänkt. De tog sig tid att förstå vårt varumärke och skapade en digital upplevelse som perfekt representerar vilka vi är och resonerar med vår målgrupp.",
       author: "Emma Rodriguez",
-      position: "Brand Manager",
+      position: "Varumärkeschef",
       company: "Elevate Retail",
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&h=150&q=80"
     }
@@ -77,9 +77,9 @@ const TestimonialsSection = () => {
     <section id="testimonials" className="viewport-section py-16 md:py-24 px-4 md:px-6 bg-secondary/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 fade-in-element">Client Testimonials</h2>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 fade-in-element">Kundrecensioner</h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto fade-in-element">
-            Hear what our clients have to say about their experience working with us.
+            Hör vad våra kunder säger om sin erfarenhet av att arbeta med oss.
           </p>
         </div>
         
@@ -106,7 +106,7 @@ const TestimonialsSection = () => {
                   index === activeIndex ? 'bg-primary w-4 md:w-6' : 'bg-primary/30'
                 }`}
                 onClick={() => setActiveIndex(index)}
-                aria-label={`Go to testimonial ${index + 1}`}
+                aria-label={`Gå till recension ${index + 1}`}
               />
             ))}
           </div>
@@ -115,7 +115,7 @@ const TestimonialsSection = () => {
             <button
               className="h-9 w-9 md:h-10 md:w-10 rounded-full border border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-300"
               onClick={prevTestimonial}
-              aria-label="Previous testimonial"
+              aria-label="Föregående recension"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:w-5 md:h-5">
                 <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -124,7 +124,7 @@ const TestimonialsSection = () => {
             <button
               className="h-9 w-9 md:h-10 md:w-10 rounded-full border border-primary flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors duration-300"
               onClick={nextTestimonial}
-              aria-label="Next testimonial"
+              aria-label="Nästa recension"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:w-5 md:h-5">
                 <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
