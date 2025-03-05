@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Button from './Button';
 import { useToast } from "@/hooks/use-toast";
@@ -57,7 +58,12 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-medium">Maila mig på</h4>
-                  <p className="text-gray-400">nadia@nadianasser.com</p>
+                  <a 
+                    href="mailto:nadia@nadianasser.com" 
+                    className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+                  >
+                    nadia@nadianasser.com
+                  </a>
                 </div>
               </div>
               
