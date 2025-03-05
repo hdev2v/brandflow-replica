@@ -90,8 +90,8 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Single main portrait image */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-[90%] md:w-[85%] h-full z-20">
+              {/* Single main portrait image - reduced width and shifted left */}
+              <div className="absolute left-[45%] transform -translate-x-1/2 w-[80%] md:w-[75%] h-full z-20">
                 <div className="rounded-3xl overflow-hidden shadow-2xl h-full">
                   <img 
                     src="/lovable-uploads/c660c0d9-e040-49d3-82fa-3d876387af15.png"
