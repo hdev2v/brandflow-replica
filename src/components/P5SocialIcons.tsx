@@ -37,6 +37,7 @@ const P5SocialIcons: React.FC = () => {
         ref={canvasRef} 
         className="absolute inset-0"
         onClick={handleCanvasClick}
+        style={{ cursor: 'pointer' }}
       />
     </div>
   );

@@ -22,4 +22,7 @@ export interface SocialIcon {
   isColliding?: boolean; // Tracks if icon is currently colliding
   collisionTimer?: number; // Timer for collision effect duration
   originalColor?: string; // Original color to return to after collision
+  scale?: number; // Scale factor for pop-up animation
+  targetScale?: number; // Target scale for animation
+  popAnimationActive?: boolean; // Whether icon is currently doing a pop animation
 }

@@ -47,5 +47,12 @@ export const useP5SocialIconsSketch = ({
     };
   }, [containerRef]); // Only recreate on container change
 
+  // Update the sketch when mouse click state changes
+  useEffect(() => {
+    if (mouseClicked && sketchRef.current) {
+      // This will be handled in the p5 sketch's draw function
+    }
+  }, [mouseClicked, clickPos]);
+
   return { loading };
 };

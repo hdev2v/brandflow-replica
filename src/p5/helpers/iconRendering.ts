@@ -11,6 +11,10 @@ export const renderIcon = (
 ): void => {
   const imageLoaded = logoImages[icon.platform] && loadedImages[icon.platform];
   
+  // Apply scaling for pop animation
+  const scaleFactor = icon.scale !== undefined ? icon.scale : 1.0;
+  const currentSize = icon.size * scaleFactor;
+  
   // Add glow effect if icon is colliding
   if (icon.isColliding) {
     p.push();
@@ -24,9 +28,9 @@ export const renderIcon = (
     if (icon.rotation !== undefined) {
       p.translate(icon.x, icon.y);
       p.rotate(icon.rotation);
-      p.circle(0, 0, icon.size * 1.4);
+      p.circle(0, 0, currentSize * 1.4);
     } else {
-      p.circle(icon.x, icon.y, icon.size * 1.4);
+      p.circle(icon.x, icon.y, currentSize * 1.4);
     }
     p.pop();
   }
@@ -39,10 +43,10 @@ export const renderIcon = (
       p.translate(icon.x, icon.y);
       p.rotate(icon.rotation);
       p.tint(255, icon.opacity * 2.55); // Convert opacity to 0-255 range
-      p.image(logoImages[icon.platform], 0, 0, icon.size, icon.size);
+      p.image(logoImages[icon.platform], 0, 0, currentSize, currentSize);
     } else {
       p.tint(255, icon.opacity * 2.55); // Convert opacity to 0-255 range
-      p.image(logoImages[icon.platform], icon.x, icon.y, icon.size, icon.size);
+      p.image(logoImages[icon.platform], icon.x, icon.y, currentSize, currentSize);
     }
     p.pop();
   } else {
@@ -58,17 +62,17 @@ export const renderIcon = (
       p.translate(icon.x, icon.y);
       p.rotate(icon.rotation);
       p.fill(rgb.r, rgb.g, rgb.b, icon.opacity);
-      p.circle(0, 0, icon.size);
+      p.circle(0, 0, currentSize);
       p.fill(255, 255, 255, icon.opacity + 10);
-      p.textSize(icon.size * 0.45);
+      p.textSize(currentSize * 0.45);
       p.textAlign(p.CENTER, p.CENTER);
       p.textStyle(p.BOLD);
       p.text(icon.platform.charAt(0).toUpperCase(), 0, 0);
     } else {
       p.fill(rgb.r, rgb.g, rgb.b, icon.opacity);
-      p.circle(icon.x, icon.y, icon.size);
+      p.circle(icon.x, icon.y, currentSize);
       p.fill(255, 255, 255, icon.opacity + 10);
-      p.textSize(icon.size * 0.45);
+      p.textSize(currentSize * 0.45);
       p.textAlign(p.CENTER, p.CENTER);
       p.textStyle(p.BOLD);
       p.text(icon.platform.charAt(0).toUpperCase(), icon.x, icon.y);

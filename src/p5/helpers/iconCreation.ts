@@ -24,9 +24,9 @@ export const createIcon = (
     vx = p.cos(angle) * speed;
     vy = p.sin(angle) * speed;
   } else {
-    // For icons created by clicks, make them explode outward
+    // For icons created by clicks, make them explode outward with more energy
     const angle = p.random(0, p.TWO_PI);
-    const speed = p.random(2, 4);
+    const speed = p.random(3, 5); // Increased speed for more dynamic "pop" effect
     vx = p.cos(angle) * speed;
     vy = p.sin(angle) * speed;
   }
@@ -44,7 +44,10 @@ export const createIcon = (
     vx,
     vy,
     rotation: p.random(0, p.TWO_PI),
-    rotationSpeed: p.random(-0.05, 0.05)
+    rotationSpeed: p.random(-0.05, 0.05),
+    scale: 0.1, // Start small for popup animation
+    targetScale: 1.0, // Target normal size
+    popAnimationActive: true // Flag to indicate this icon is animating in
   };
 };
 
@@ -67,7 +70,7 @@ export const createIconsAtPosition = (
   y: number
 ): SocialIcon[] => {
   const newIcons = [...icons];
-  const randomCount = Math.floor(p.random(3, 6));
+  const randomCount = Math.floor(p.random(4, 8)); // Increased number of icons that appear
   
   for (let i = 0; i < randomCount; i++) {
     newIcons.push(createIcon(p, x, y, false));

@@ -60,6 +60,18 @@ export const updateIconAnimation = (p: p5, icon: SocialIcon): void => {
       icon.originalColor = undefined;
     }
   }
+  
+  // Handle pop-up animation
+  if (icon.popAnimationActive && icon.scale !== undefined && icon.targetScale !== undefined) {
+    // Smoothly animate from the small starting scale to the full size
+    icon.scale += (icon.targetScale - icon.scale) * 0.1;
+    
+    // If we're close enough to the target, consider the animation complete
+    if (Math.abs(icon.scale - icon.targetScale) < 0.01) {
+      icon.scale = icon.targetScale;
+      icon.popAnimationActive = false;
+    }
+  }
 };
 
 // Clean up icons that are far outside the canvas
