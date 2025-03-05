@@ -79,6 +79,17 @@ const HeroSection = () => {
                 </div>
               </div>
               
+              {/* Social media screenshot positioned at bottom right behind the main portrait */}
+              <div className="absolute right-0 bottom-0 w-[45%] h-[40%] z-10 transform translate-x-6 translate-y-6">
+                <div className="rounded-xl overflow-hidden shadow-lg h-full">
+                  <img 
+                    src="/lovable-uploads/5489e3ba-6f97-4712-9cc6-b0075c0b0340.png"
+                    alt="Social Media Performance" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
+              </div>
+              
               {/* Single main portrait image */}
               <div className="absolute left-1/2 transform -translate-x-1/2 w-[90%] md:w-[85%] h-full z-20">
                 <div className="rounded-3xl overflow-hidden shadow-2xl h-full">
