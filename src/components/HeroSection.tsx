@@ -64,6 +64,25 @@ const HeroSection = () => {
                 Boka gratis konsultation
               </Button>
             </div>
+            
+            {/* Mobile-only smaller images that appear below text */}
+            <div className="flex flex-col gap-4 mt-8 lg:hidden">
+              <div className="w-full h-[160px] rounded-xl overflow-hidden shadow-lg">
+                <img 
+                  src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
+                  alt="Services Collage" 
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+              
+              <div className="w-full h-[160px] rounded-xl overflow-hidden shadow-lg">
+                <img 
+                  src="/lovable-uploads/5489e3ba-6f97-4712-9cc6-b0075c0b0340.png"
+                  alt="Social Media Performance" 
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            </div>
           </div>
           
           <div className="order-1 lg:order-2 relative mb-8 lg:mb-0">
@@ -79,8 +98,8 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Collage image positioned in front of the main portrait */}
-              <div className="absolute right-0 top-0 w-[45%] h-[40%] z-20 transform translate-x-6 -translate-y-6">
+              {/* Collage image positioned in front of the main portrait - HIDDEN ON MOBILE */}
+              <div className="hidden lg:block absolute right-0 top-0 w-[45%] h-[40%] z-20 transform translate-x-6 -translate-y-6">
                 <div className="rounded-xl overflow-hidden shadow-lg h-full">
                   <img 
                     src="/lovable-uploads/2c1feb13-1205-4fcc-8e1d-371a4ec9929f.png"
@@ -90,8 +109,8 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Social media screenshot positioned in front of the main portrait */}
-              <div className="absolute right-0 bottom-0 w-[45%] h-[40%] z-20 transform translate-x-6 translate-y-6">
+              {/* Social media screenshot positioned in front of the main portrait - HIDDEN ON MOBILE */}
+              <div className="hidden lg:block absolute right-0 bottom-0 w-[45%] h-[40%] z-20 transform translate-x-6 translate-y-6">
                 <div className="rounded-xl overflow-hidden shadow-lg h-full">
                   <img 
                     src="/lovable-uploads/5489e3ba-6f97-4712-9cc6-b0075c0b0340.png"
